@@ -1,0 +1,25 @@
+<h1>ログイン</h1>
+<%= form_with(scope: :session, model: @user, url: login_path, local: true, id: "sessionForm") do |f| %>
+
+  <div class="mb-3">
+    <%= icon("envelope") %> <%= f.label "Eメールアドレス", for: "sessionName", class: "form-label required" %>
+    <%= f.email_field :name, class: "form-control", id: "sessionName"%>
+  </div>
+
+  <div class="mb-3">
+    <%= icon("key-fill") %> <%= f.label "パスワード", for: "userPassword", class: "form-label required" %>
+    <%= f.password_field :password, class: "form-control", id: "sessionPassword"%>
+  </div>
+
+  <div class="form-check mb-4">
+    <%= f.check_box :remember_me, class: "form-check-input", id: "loginCheck" ,as: :boolean %>
+    <%= f.label "ログイン状態を保持する", class: "form-check-label", for: "loginCheck" %>
+    </label>
+  </div>
+
+  <div class="mb-5">
+    <%= f.submit "ログイン", class: "btn btn-primary" %>
+    <%= link_to "キャンセル", root_path, class: "btn btn-secondary" %>
+  </div>
+
+<% end %>
