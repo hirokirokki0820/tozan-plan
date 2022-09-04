@@ -66,12 +66,6 @@ class User < ApplicationRecord
     activation_sent_at < 24.hours.ago
   end
 
-  # 有効化トークンとダイジェストを作成及び代入する
-  def create_activation_digest
-    self.activation_token = User.new_token
-    self.activation_digest = User.digest(activation_token)
-  end
-
   # パスワード再設定の属性を設定する
   def create_reset_digest
     self.reset_token = User.new_token
@@ -99,8 +93,14 @@ private
   # ランダムなユーザーIDを返す
   def set_id
     while self.id.blank? || User.find_by(id: self.id).present? do
-      self.id = SecureRandom.base58
+      self.id = SecureRandom.base36
     end
+  end
+
+  # 有効化トークンとダイジェストを作成及び代入する
+  def create_activation_digest
+    self.activation_token = User.new_token
+    self.activation_digest = User.digest(activation_token)
   end
 
 end
