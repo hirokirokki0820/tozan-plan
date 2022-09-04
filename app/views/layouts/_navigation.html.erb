@@ -14,7 +14,7 @@
                 アカウント
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                <li><%= link_to icon_with_text("person-circle","マイページ"), user_path(current_user), class: "dropdown-item" %></li>
+                <li><%= link_to icon_with_text("person-circle","マイページ"), current_user, class: "dropdown-item" %></li>
                 <li><%= link_to icon_with_text("gear","アカウント設定"), edit_user_path(current_user), class: "dropdown-item"%></li>
               </ul>
             </li>
