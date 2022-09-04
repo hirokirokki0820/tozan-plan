@@ -11,6 +11,23 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="footer__fixed">
+      <%#= render 'layouts/navigation' %>
+      <div id="page-content">
+        <div class="container mt-4">
+          <div id="flash">
+            <%= render 'layouts/flash' %>
+          </div>
+          <%= yield %>
+          <% if Rails.env.development? %>
+            <div class="text-bg-light py-2 px-3 shadow-sm rounded">
+              <p><%= debug(params) %></p>
+              <p>セッションID => <%= session[:user_id] %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <%= render 'layouts/footer' %>
+    </div>
   </body>
 </html>

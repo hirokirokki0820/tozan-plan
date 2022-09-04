@@ -1,0 +1,8 @@
+<%= bootstrap_form_with(model: user, class: "mb-5") do |f| %>
+  <%= f.text_field :name, placeholder: "ユーザー名（表示名）を入力してください" %>
+  <%= f.email_field :email, placeholder: "有効なEメールアドレスを入力してください" %>
+  <%= f.password_field :password, placeholder: "6文字以上の半角英数字を入力してください" %>
+  <%= f.password_field :password_confirmation, placeholder: "パスワードをもう一度入力してください" %>
+  <%= f.primary %>
+  <%= link_to "キャンセル", root_path , class: "btn btn-secondary"%>
+<% end %>
