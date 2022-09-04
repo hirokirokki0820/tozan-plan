@@ -50,6 +50,8 @@ gem "bootsnap", require: false
 
 gem "bootstrap_form"
 
+gem "dotenv-rails"
+
 group :development, :test do
   gem "sqlite3", "~> 1.4"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
