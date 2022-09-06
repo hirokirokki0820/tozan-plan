@@ -48,9 +48,17 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# bootstrap の form
 gem "bootstrap_form"
 
+# 環境変数（.env）用のgem
 gem "dotenv-rails"
+
+# PDF変換用のgem
+gem 'prawn'
+gem 'prawn-table'
+
+
 
 group :development, :test do
   gem "sqlite3", "~> 1.4"
