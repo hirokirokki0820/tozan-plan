@@ -28,6 +28,14 @@ label.required:after {
   color: red;
 }
 
+// 誕生日のセレクトボックスのスタイル
+.form__select{
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: #555;
+}
+
 /********* ハンバーガーメニューのスタイル *********/
 .navbar-toggler{
   border: none !important;
@@ -44,6 +52,102 @@ label.required:after {
   .navbar-toggler-icon{
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
   }
+}
+
+/********* ボタンデザイン（Large, Medium） *********/
+// Largeボタン（ベーシック）
+.btn__basic__l{
+  margin: 0 auto;
+  font-size: 20px;
+  text-decoration: initial;
+  color: white;
+  font-weight: bold;
+  background-color: #888;
+  display: inline-block;
+  text-align: center;
+  height: 80px;
+  line-height: 80px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 3px 0 0 #555;
+  transition:0.2s all;
+  &:hover{
+    text-decoration: initial;
+    color: white;
+    background-color: #555;
+    -webkit-transform: translateX(3px);
+    transform: translateX(3px);
+    -webkit-transform: translateY(3px);
+    transform: translateY(3px);
+    box-shadow: none;
+
+  }
+}
+
+// ボタンの幅（80%）
+.btn__w80 {
+  width: 80%;
+}
+
+// mediumボタン（ベーシック）
+.btn__basic__m{
+  margin: 0 auto;
+  text-decoration: initial;
+  color: white;
+  font-weight: bold;
+  background-color: #888;
+  display: inline-block;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 3px 0 0 #555;
+  transition:0.2s all;
+  &:hover{
+    text-decoration: initial;
+    color: white;
+    background-color: #555;
+    -webkit-transform: translateX(3px);
+    transform: translateX(3px);
+    -webkit-transform: translateY(3px);
+    transform: translateY(3px);
+    box-shadow: none;
+
+  }
+}
+
+// ボタンの配色（グリーン）
+.btn__green{
+  box-shadow:0 3px 0 0 #005400;
+
+  background: #0ba500; /* Old browsers */
+  background: -moz-linear-gradient(top,  #0ba500 0%, #008000 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #0ba500 0%,#008000 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #0ba500 0%,#008000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+// ボタンの配色（レッド）
+.btn__red{
+  box-shadow:0 3px 0 0 #8d0a0e;
+
+  background: #EE6E73; /* Old browsers */
+  background: -moz-linear-gradient(top,  #EE6E73 0%, #ff5c61 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #EE6E73 0%,#ff5c61 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #EE6E73 0%,#ff5c61 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.btn__orange{
+  box-shadow:0 3px 0 0 #b84c00;
+  background: #eb6100;
+  background: -moz-linear-gradient(top,  #eb6100 0%, #eb6100 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #eb6100 0%,#eb6100 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #eb6100 0%,#eb6100 100%);
+}
+
+// PDF表示ボタンのスタイル
+.btn__pdf{
+  background: #B30B01
 }
 
 

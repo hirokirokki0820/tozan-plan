@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_04_075237) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_07_080523) do
+  create_table "plans", id: :string, force: :cascade do |t|
+    t.string "destination"
+    t.string "submit_to"
+    t.date "start_day"
+    t.date "last_day"
+    t.string "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_plans_on_user_id"
+  end
+
   create_table "users", id: :string, force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -24,6 +35,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_04_075237) do
     t.datetime "activation_sent_at"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.string "full_name"
+    t.date "birthday"
+    t.integer "age"
+    t.string "gender"
+    t.string "address"
+    t.string "phone_number"
+    t.string "emergency_contact"
+    t.string "emergency_number"
   end
 
+  add_foreign_key "plans", "users"
 end

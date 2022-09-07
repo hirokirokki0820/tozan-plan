@@ -2,6 +2,7 @@ class User < ApplicationRecord
   attr_accessor :remember_token, :remember_me, :activation_token, :reset_token
   before_create :set_id, :create_activation_digest
   before_save :downcase_email
+  has_many :plans, dependent: :destroy
 
   # email　オブジェクトが保存される時点で小文字に変換する
   before_save { self.email = email.downcase }

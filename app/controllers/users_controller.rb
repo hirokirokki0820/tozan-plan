@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to user_url(@user), notice: "ユーザー情報を更新しました"
+      redirect_to user_url(@user), notice: "アカウント情報を更新しました"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-      redirect_to users_url, notice: "ユーザーアカウントを削除しました", status: :see_other
+      redirect_to root_url, notice: "ユーザーアカウントを削除しました", status: :see_other
   end
 
   private

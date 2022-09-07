@@ -2,6 +2,7 @@ ja:
   activerecord:
     models:
       user: ユーザー
+      plan: 計画書
     attributes:
       user:
         name: ユーザー名
@@ -10,3 +11,8 @@ ja:
         password_confirmation: パスワード(確認用)
         created_at: 作成日
         updated_at: 更新日
+      plan:
+        destination: 目的の山域・山名
+        submit_to: 提出先
+        start_day: 入山日
+        last_day: 下山日

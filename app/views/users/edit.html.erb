@@ -1,3 +1,28 @@
 <h1>アカウントの編集</h1>
 
 <%= render "form", user: @user %>
+
+<hr>
+<div class="mb-5">
+  <a class="btn btn-danger" href="#" data-bs-toggle="modal" data-bs-target="#accountDeleteModal"><%= icon_with_text("trash","アカウントを削除する") %></a>
+  <%#= link_to icon_with_text("trash", "アカウントを削除する"), @user, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？"} %>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="accountDeleteModal" tabindex="-1" aria-labelledby="accountDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="accountDeleteModalLabel">確認</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        本当に削除しますか？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+        <%= link_to "削除", @user, class: "btn btn-danger", data: { turbo_method: :delete } %>
+      </div>
+    </div>
+  </div>
+</div>
