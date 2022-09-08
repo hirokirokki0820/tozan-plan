@@ -62,7 +62,7 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "user_authentication_email_production"
 
-  config.action_mailer.default_url_options = { host: 'https://user-authentication-email.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'https://tozan-plan.herokuapp.com' }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
