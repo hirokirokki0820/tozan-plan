@@ -244,6 +244,7 @@ DEPENDENCIES
   dotenv-rails
   jbuilder
   jsbundling-rails
+  matrix
   pg
   prawn
   prawn-table

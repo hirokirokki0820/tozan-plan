@@ -58,6 +58,7 @@ gem "dotenv-rails"
 gem 'prawn'
 gem 'prawn-table'
 
+gem "matrix"
 
 
 group :development, :test do
