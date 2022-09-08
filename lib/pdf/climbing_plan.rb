@@ -22,24 +22,41 @@ class ClimbingPlan < Prawn::Document
     #   text "御中", indent_paragraphs: 150
     #   stroke_bounds
     # end
+
+    #---- 山域・山名、参考期間、および登山者一覧 ----
     info = [
       [{content: "<b>目的の山域・山名</b>", colspan: 2, inline_format: true}, {content: @plan.destination, colspan: 4}],
+
       [{content: "<b>山行期間</b>", colspan: 2, inline_format: true}, @plan.start_day.strftime('%m/%d'), "〜",{content: "#{@plan.last_day.strftime('%m/%d')}", colspan: 2}],
+
       [{content: "役割", rowspan: 2}, {content: "氏名", rowspan: 2}, "生年月日", {content: "性別", rowspan: 2}, "現住所", "緊急連絡先(間柄)" ],
       ["年齢", "電話番号", "電話番号"],
-      [{content: "CL", rowspan: 2}, {content: "小林 宏紀", rowspan: 2}, "1988.08.20", {content: "男", rowspan: 2}, "愛知県名古屋市中区栄1-23-456", "小林◯◯（母）" ],
-      ["34歳", "090-1234-5678", "090-1122-3344"],
-      [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
-      ["", "", ""],
-      [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
-      ["", "", ""],
-      [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
-      ["", "", ""],
-      [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
-      ["", "", ""],
-      [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
-      ["", "", ""]
+
+      #------------- 1人目 --------------
+      [{content: "#{@plan.companions[0].role unless (@plan.companions[0].nil? || @plan.companions[0].role == "X")}", rowspan: 2}, {content: "#{@plan.companions[0].full_name unless @plan.companions[0].nil?}", rowspan: 2}, "#{@plan.companions[0].birthday.to_s.split('-').join('.') unless @plan.companions[0].nil?}", {content: "#{@plan.companions[0].gender unless @plan.companions[0].nil?}", rowspan: 2}, "#{@plan.companions[0].address unless @plan.companions[0].nil?}", "#{@plan.companions[0].emergency_contact unless @plan.companions[0].nil?}" ],
+      ["#{@plan.companions[0].age.to_s + '歳' unless @plan.companions[0].nil?}", "#{@plan.companions[0].phone_number unless @plan.companions[0].nil?}", "#{@plan.companions[0].emergency_number unless @plan.companions[0].nil?}"],
+
+      #------------- 2人目 --------------
+      [{content: "#{@plan.companions[1].role unless (@plan.companions[1].nil? || @plan.companions[1].role == "X")}", rowspan: 2}, {content: "#{@plan.companions[1].full_name unless @plan.companions[1].nil?}", rowspan: 2}, "#{@plan.companions[1].birthday.to_s.split('-').join('.') unless @plan.companions[1].nil?}", {content: "#{@plan.companions[1].gender unless @plan.companions[1].nil?}", rowspan: 2}, "#{@plan.companions[1].address unless @plan.companions[1].nil?}", "#{@plan.companions[1].emergency_contact unless @plan.companions[1].nil?}" ],
+      ["#{@plan.companions[1].age.to_s + '歳' unless @plan.companions[1].nil?}", "#{@plan.companions[1].phone_number unless @plan.companions[1].nil?}", "#{@plan.companions[1].emergency_number unless @plan.companions[1].nil?}"],
+
+      #------------- 3人目 --------------
+      [{content: "#{@plan.companions[2].role unless (@plan.companions[2].nil? || @plan.companions[2].role == "X")}", rowspan: 2}, {content: "#{@plan.companions[2].full_name unless @plan.companions[2].nil?}", rowspan: 2}, "#{@plan.companions[2].birthday.to_s.split('-').join('.') unless @plan.companions[2].nil?}", {content: "#{@plan.companions[2].gender unless @plan.companions[2].nil?}", rowspan: 2}, "#{@plan.companions[2].address unless @plan.companions[2].nil?}", "#{@plan.companions[2].emergency_contact unless @plan.companions[2].nil?}" ],
+      ["#{@plan.companions[2].age.to_s + '歳' unless @plan.companions[2].nil?}", "#{@plan.companions[2].phone_number unless @plan.companions[2].nil?}", "#{@plan.companions[2].emergency_number unless @plan.companions[2].nil?}"],
+
+      #------------- 4人目 --------------
+      [{content: "#{@plan.companions[3].role unless (@plan.companions[3].nil? || @plan.companions[3].role == "X")}", rowspan: 2}, {content: "#{@plan.companions[3].full_name unless @plan.companions[3].nil?}", rowspan: 2}, "#{@plan.companions[3].birthday.to_s.split('-').join('.') unless @plan.companions[3].nil?}", {content: "#{@plan.companions[3].gender unless @plan.companions[3].nil?}", rowspan: 2}, "#{@plan.companions[3].address unless @plan.companions[3].nil?}", "#{@plan.companions[3].emergency_contact unless @plan.companions[3].nil?}" ],
+      ["#{@plan.companions[3].age.to_s + '歳' unless @plan.companions[3].nil?}", "#{@plan.companions[3].phone_number unless @plan.companions[3].nil?}", "#{@plan.companions[3].emergency_number unless @plan.companions[3].nil?}"],
+
+      #------------- 5人目 --------------
+      [{content: "#{@plan.companions[4].role unless (@plan.companions[4].nil? || @plan.companions[4].role == "X")}", rowspan: 2}, {content: "#{@plan.companions[4].full_name unless @plan.companions[4].nil?}", rowspan: 2}, "#{@plan.companions[4].birthday.to_s.split('-').join('.') unless @plan.companions[4].nil?}", {content: "#{@plan.companions[4].gender unless @plan.companions[4].nil?}", rowspan: 2}, "#{@plan.companions[4].address unless @plan.companions[4].nil?}", "#{@plan.companions[4].emergency_contact unless @plan.companions[4].nil?}" ],
+      ["#{@plan.companions[4].age.to_s + '歳' unless @plan.companions[4].nil?}", "#{@plan.companions[4].phone_number unless @plan.companions[4].nil?}", "#{@plan.companions[4].emergency_number unless @plan.companions[4].nil?}"],
+
+      #------------- 6人目 --------------
+      [{content: "#{@plan.companions[5].role unless (@plan.companions[5].nil? || @plan.companions[5].role == "X")}", rowspan: 2}, {content: "#{@plan.companions[5].full_name unless @plan.companions[5].nil?}", rowspan: 2}, "#{@plan.companions[5].birthday.to_s.split('-').join('.') unless @plan.companions[5].nil?}", {content: "#{@plan.companions[5].gender unless @plan.companions[5].nil?}", rowspan: 2}, "#{@plan.companions[5].address unless @plan.companions[5].nil?}", "#{@plan.companions[5].emergency_contact unless @plan.companions[5].nil?}" ],
+      ["#{@plan.companions[5].age.to_s + '歳' unless @plan.companions[5].nil?}", "#{@plan.companions[5].phone_number unless @plan.companions[5].nil?}", "#{@plan.companions[5].emergency_number unless @plan.companions[5].nil?}"],
     ]
+
     table info, cell_style: {height: 30},
      # widthの最大値 520
      column_widths: [30, 80, 80, 30, 200, 100] do
@@ -60,14 +77,20 @@ class ClimbingPlan < Prawn::Document
       row(2..3).font_style = :bold
     end
 
+    sample = [
+      [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
+      ["", "", ""],
+    ]
+
     move_down 20
 
     # text "<u>◎ 所属している山岳会・サークル</u>", size: 14 ,inline_format: true
+
+    #---- ◎ 所属している山岳会・サークル ----
     club_title = [["◎", "所属している山岳会・サークル"]]
     table club_title, column_widths: [25, 210] do
       cells.borders = [:bottom]
       cells.size = 14
-
       cells.border_bottom_width = 1
     end
     move_down 10

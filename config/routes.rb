@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :plans do
     resources :climbing_plan, only: [:index]
+    resources :companions
   end
 end

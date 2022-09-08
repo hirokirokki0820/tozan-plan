@@ -1,0 +1,56 @@
+<div class="mb-3">
+  <%= link_to icon_with_text("box-arrow-in-left", "計画書一覧に戻る"), current_user %>
+</div>
+<h1 class="mb-4"><%= @plan.destination %></h1>
+
+
+<h4>◉登山者名簿の登録</h4>
+<span class="text-danger" style="font-size: 0.8em">※最大６人まで登録できます</span>
+<%#------- 登山者名簿 -------%>
+<div class="card shadow-sm mt-3 mb-4">
+  <div class="card-body mx-3">
+    <div class="row py-2">
+      <div class="col-4 mt-auto fw-bold">
+        氏名
+      </div>
+      <div class="col-3 mt-auto fw-bold">
+        性別
+      </div>
+      <div class="col-5 mt-auto fw-bold d-flex justify-content-end">
+
+      </div>
+      <hr class="mt-2">
+    </div>
+    <div class="row">
+      <% @plan.companions.order(role: "ASC").each do |companion| %>
+        <div class="col-4 mt-auto">
+          <%= companion.full_name %>
+          <%#= link_to companion.full_name, plan_companion_path(companion.plan_id, companion.id) %>
+        </div>
+        <div class="col-3 mt-auto">
+          <%= companion.gender %>
+        </div>
+        <div class="col-5 text-end">
+          <%= link_to "編集", edit_plan_companion_path(companion.plan_id, companion.id) , class: "btn btn-outline-primary" %>
+          <%= link_to icon("trash"), plan_companion_path(companion.plan_id, companion.id), class: "btn btn-outline-danger", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？"}%>
+        </div>
+        <hr class="mt-2" style="border: 1px solid #ccc">
+      <% end %>
+    </div>
+    <% if @plan.companions.length < 6 %>
+      <%= link_to icon_with_text("plus-circle", "追加"),
+                      new_plan_companion_path(@plan),
+                      class: "btn__basic__m btn__green mb-3 mt-1 d-block"
+      %>
+    <% end %>
+  </div>
+</div>
+
+<%#------- PDF出力ボタン -------%>
+<div class="mb-4">
+  <%= link_to icon_with_text("file-earmark-pdf", "PDFを出力する"), plan_climbing_plan_index_path(@plan, format: "pdf"), class: "btn__basic__l", style: "background: #B30B01" %>
+</div>
+
+<div class="mb-5">
+  <%= link_to icon_with_text("box-arrow-in-left", "計画書一覧に戻る"), current_user %>
+</div>

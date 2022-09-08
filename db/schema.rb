@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_07_080523) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_07_124457) do
+  create_table "companions", force: :cascade do |t|
+    t.string "role"
+    t.string "full_name"
+    t.string "gender"
+    t.integer "age"
+    t.date "birthday"
+    t.string "address"
+    t.string "phone_number"
+    t.string "emergency_contact"
+    t.string "emergency_number"
+    t.string "plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plan_id"], name: "index_companions_on_plan_id"
+  end
+
   create_table "plans", id: :string, force: :cascade do |t|
     t.string "destination"
     t.string "submit_to"
@@ -45,5 +61,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_080523) do
     t.string "emergency_number"
   end
 
+  add_foreign_key "companions", "plans"
   add_foreign_key "plans", "users"
 end

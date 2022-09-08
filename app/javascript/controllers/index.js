@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import CompanionController from "./companion_controller"
+application.register("companion", CompanionController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
