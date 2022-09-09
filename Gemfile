@@ -58,6 +58,7 @@ gem "dotenv-rails"
 gem 'prawn'
 gem 'prawn-table'
 
+# heroku デプロイ時に rakeファイルを読み込むために必要
 gem "matrix"
 
 

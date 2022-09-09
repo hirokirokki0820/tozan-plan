@@ -1,6 +1,6 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: %i[ show edit update destroy ]
-  before_action :require_same_user, only: %i[ edit update destroy ]
+  before_action :require_same_user, only: %i[ show edit update destroy ]
 
   def index
     @plans = Plan.all
@@ -50,8 +50,8 @@ class PlansController < ApplicationController
 
     def require_same_user
       if current_user != @plan.user
-        flash[:alert] = "ご自身以外の計画書の編集・削除はできません"
-        redirect_to current_user
+        flash[:alert] = "異なるユーザーからのアクセスは禁止されています"
+        redirect_to root_path
       end
     end
 end
