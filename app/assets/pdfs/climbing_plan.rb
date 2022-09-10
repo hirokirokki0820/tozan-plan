@@ -3,6 +3,7 @@ module Pdfs
     def initialize(plan)
       super(page_size: 'A4') #新規PDF作成
       @plan = plan
+      @companions = @plan.companions.order(role: 'ASC')
 
       # 日本語フォントの読み込み
       font_families.update('JP' => { normal: 'app/assets/fonts/ipaexm.ttf', bold: 'app/assets/fonts/ipaexg.ttf' })
@@ -36,28 +37,28 @@ module Pdfs
         ["年齢", "電話番号", "電話番号"],
 
         #------------- 1人目 --------------
-        [{content: "#{@plan.companions[0].role unless (@plan.companions[0].nil? || @plan.companions[0].role == "X")}", rowspan: 2}, {content: "#{@plan.companions[0].full_name unless @plan.companions[0].nil?}", rowspan: 2}, "#{@plan.companions[0].birthday.to_s.split('-').join('.') unless @plan.companions[0].nil?}", {content: "#{@plan.companions[0].gender unless @plan.companions[0].nil?}", rowspan: 2}, "#{@plan.companions[0].address unless @plan.companions[0].nil?}", "#{@plan.companions[0].emergency_contact unless @plan.companions[0].nil?}" ],
-        ["#{@plan.companions[0].age.to_s + '歳' unless @plan.companions[0].nil?}", "#{@plan.companions[0].phone_number unless @plan.companions[0].nil?}", "#{@plan.companions[0].emergency_number unless @plan.companions[0].nil?}"],
+        [{content: "#{@companions[0].role unless (@companions[0].nil? || @companions[0].role == "X")}", rowspan: 2}, {content: "#{@companions[0].full_name unless @companions[0].nil?}", rowspan: 2}, "#{@companions[0].birthday.to_s.split('-').join('.') unless @companions[0].nil?}", {content: "#{@companions[0].gender unless @companions[0].nil?}", rowspan: 2}, "#{@companions[0].address unless @companions[0].nil?}", "#{@companions[0].emergency_contact unless @companions[0].nil?}" ],
+        ["#{@companions[0].age.to_s + '歳' unless @companions[0].nil?}", "#{@companions[0].phone_number unless @companions[0].nil?}", "#{@companions[0].emergency_number unless @companions[0].nil?}"],
 
         #------------- 2人目 --------------
-        [{content: "#{@plan.companions[1].role unless (@plan.companions[1].nil? || @plan.companions[1].role == "X")}", rowspan: 2}, {content: "#{@plan.companions[1].full_name unless @plan.companions[1].nil?}", rowspan: 2}, "#{@plan.companions[1].birthday.to_s.split('-').join('.') unless @plan.companions[1].nil?}", {content: "#{@plan.companions[1].gender unless @plan.companions[1].nil?}", rowspan: 2}, "#{@plan.companions[1].address unless @plan.companions[1].nil?}", "#{@plan.companions[1].emergency_contact unless @plan.companions[1].nil?}" ],
-        ["#{@plan.companions[1].age.to_s + '歳' unless @plan.companions[1].nil?}", "#{@plan.companions[1].phone_number unless @plan.companions[1].nil?}", "#{@plan.companions[1].emergency_number unless @plan.companions[1].nil?}"],
+        [{content: "#{@companions[1].role unless (@companions[1].nil? || @companions[1].role == "X")}", rowspan: 2}, {content: "#{@companions[1].full_name unless @companions[1].nil?}", rowspan: 2}, "#{@companions[1].birthday.to_s.split('-').join('.') unless @companions[1].nil?}", {content: "#{@companions[1].gender unless @companions[1].nil?}", rowspan: 2}, "#{@companions[1].address unless @companions[1].nil?}", "#{@companions[1].emergency_contact unless @companions[1].nil?}" ],
+        ["#{@companions[1].age.to_s + '歳' unless @companions[1].nil?}", "#{@companions[1].phone_number unless @companions[1].nil?}", "#{@companions[1].emergency_number unless @companions[1].nil?}"],
 
         #------------- 3人目 --------------
-        [{content: "#{@plan.companions[2].role unless (@plan.companions[2].nil? || @plan.companions[2].role == "X")}", rowspan: 2}, {content: "#{@plan.companions[2].full_name unless @plan.companions[2].nil?}", rowspan: 2}, "#{@plan.companions[2].birthday.to_s.split('-').join('.') unless @plan.companions[2].nil?}", {content: "#{@plan.companions[2].gender unless @plan.companions[2].nil?}", rowspan: 2}, "#{@plan.companions[2].address unless @plan.companions[2].nil?}", "#{@plan.companions[2].emergency_contact unless @plan.companions[2].nil?}" ],
-        ["#{@plan.companions[2].age.to_s + '歳' unless @plan.companions[2].nil?}", "#{@plan.companions[2].phone_number unless @plan.companions[2].nil?}", "#{@plan.companions[2].emergency_number unless @plan.companions[2].nil?}"],
+        [{content: "#{@companions[2].role unless (@companions[2].nil? || @companions[2].role == "X")}", rowspan: 2}, {content: "#{@companions[2].full_name unless @companions[2].nil?}", rowspan: 2}, "#{@companions[2].birthday.to_s.split('-').join('.') unless @companions[2].nil?}", {content: "#{@companions[2].gender unless @companions[2].nil?}", rowspan: 2}, "#{@companions[2].address unless @companions[2].nil?}", "#{@companions[2].emergency_contact unless @companions[2].nil?}" ],
+        ["#{@companions[2].age.to_s + '歳' unless @companions[2].nil?}", "#{@companions[2].phone_number unless @companions[2].nil?}", "#{@companions[2].emergency_number unless @companions[2].nil?}"],
 
         #------------- 4人目 --------------
-        [{content: "#{@plan.companions[3].role unless (@plan.companions[3].nil? || @plan.companions[3].role == "X")}", rowspan: 2}, {content: "#{@plan.companions[3].full_name unless @plan.companions[3].nil?}", rowspan: 2}, "#{@plan.companions[3].birthday.to_s.split('-').join('.') unless @plan.companions[3].nil?}", {content: "#{@plan.companions[3].gender unless @plan.companions[3].nil?}", rowspan: 2}, "#{@plan.companions[3].address unless @plan.companions[3].nil?}", "#{@plan.companions[3].emergency_contact unless @plan.companions[3].nil?}" ],
-        ["#{@plan.companions[3].age.to_s + '歳' unless @plan.companions[3].nil?}", "#{@plan.companions[3].phone_number unless @plan.companions[3].nil?}", "#{@plan.companions[3].emergency_number unless @plan.companions[3].nil?}"],
+        [{content: "#{@companions[3].role unless (@companions[3].nil? || @companions[3].role == "X")}", rowspan: 2}, {content: "#{@companions[3].full_name unless @companions[3].nil?}", rowspan: 2}, "#{@companions[3].birthday.to_s.split('-').join('.') unless @companions[3].nil?}", {content: "#{@companions[3].gender unless @companions[3].nil?}", rowspan: 2}, "#{@companions[3].address unless @companions[3].nil?}", "#{@companions[3].emergency_contact unless @companions[3].nil?}" ],
+        ["#{@companions[3].age.to_s + '歳' unless @companions[3].nil?}", "#{@companions[3].phone_number unless @companions[3].nil?}", "#{@companions[3].emergency_number unless @companions[3].nil?}"],
 
         #------------- 5人目 --------------
-        [{content: "#{@plan.companions[4].role unless (@plan.companions[4].nil? || @plan.companions[4].role == "X")}", rowspan: 2}, {content: "#{@plan.companions[4].full_name unless @plan.companions[4].nil?}", rowspan: 2}, "#{@plan.companions[4].birthday.to_s.split('-').join('.') unless @plan.companions[4].nil?}", {content: "#{@plan.companions[4].gender unless @plan.companions[4].nil?}", rowspan: 2}, "#{@plan.companions[4].address unless @plan.companions[4].nil?}", "#{@plan.companions[4].emergency_contact unless @plan.companions[4].nil?}" ],
-        ["#{@plan.companions[4].age.to_s + '歳' unless @plan.companions[4].nil?}", "#{@plan.companions[4].phone_number unless @plan.companions[4].nil?}", "#{@plan.companions[4].emergency_number unless @plan.companions[4].nil?}"],
+        [{content: "#{@companions[4].role unless (@companions[4].nil? || @companions[4].role == "X")}", rowspan: 2}, {content: "#{@companions[4].full_name unless @companions[4].nil?}", rowspan: 2}, "#{@companions[4].birthday.to_s.split('-').join('.') unless @companions[4].nil?}", {content: "#{@companions[4].gender unless @companions[4].nil?}", rowspan: 2}, "#{@companions[4].address unless @companions[4].nil?}", "#{@companions[4].emergency_contact unless @companions[4].nil?}" ],
+        ["#{@companions[4].age.to_s + '歳' unless @companions[4].nil?}", "#{@companions[4].phone_number unless @companions[4].nil?}", "#{@companions[4].emergency_number unless @companions[4].nil?}"],
 
         #------------- 6人目 --------------
-        [{content: "#{@plan.companions[5].role unless (@plan.companions[5].nil? || @plan.companions[5].role == "X")}", rowspan: 2}, {content: "#{@plan.companions[5].full_name unless @plan.companions[5].nil?}", rowspan: 2}, "#{@plan.companions[5].birthday.to_s.split('-').join('.') unless @plan.companions[5].nil?}", {content: "#{@plan.companions[5].gender unless @plan.companions[5].nil?}", rowspan: 2}, "#{@plan.companions[5].address unless @plan.companions[5].nil?}", "#{@plan.companions[5].emergency_contact unless @plan.companions[5].nil?}" ],
-        ["#{@plan.companions[5].age.to_s + '歳' unless @plan.companions[5].nil?}", "#{@plan.companions[5].phone_number unless @plan.companions[5].nil?}", "#{@plan.companions[5].emergency_number unless @plan.companions[5].nil?}"],
+        [{content: "#{@companions[5].role unless (@companions[5].nil? || @companions[5].role == "X")}", rowspan: 2}, {content: "#{@companions[5].full_name unless @companions[5].nil?}", rowspan: 2}, "#{@companions[5].birthday.to_s.split('-').join('.') unless @companions[5].nil?}", {content: "#{@companions[5].gender unless @companions[5].nil?}", rowspan: 2}, "#{@companions[5].address unless @companions[5].nil?}", "#{@companions[5].emergency_contact unless @companions[5].nil?}" ],
+        ["#{@companions[5].age.to_s + '歳' unless @companions[5].nil?}", "#{@companions[5].phone_number unless @companions[5].nil?}", "#{@companions[5].emergency_number unless @companions[5].nil?}"],
       ]
 
       table info, cell_style: {height: 30},

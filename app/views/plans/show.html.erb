@@ -14,7 +14,7 @@
         氏名
       </div>
       <div class="col-3 mt-auto fw-bold">
-        性別
+        役割
       </div>
       <div class="col-5 mt-auto fw-bold d-flex justify-content-end">
 
@@ -28,7 +28,8 @@
           <%#= link_to companion.full_name, plan_companion_path(companion.plan_id, companion.id) %>
         </div>
         <div class="col-3 mt-auto">
-          <%= companion.gender %>
+          <%=  companion.role != "X" ? companion.role : icon("dash-lg")  %>
+          <%#= companion.gender %>
         </div>
         <div class="col-5 text-end">
           <%= link_to "編集", edit_plan_companion_path(companion.plan_id, companion.id) , class: "btn btn-outline-primary" %>

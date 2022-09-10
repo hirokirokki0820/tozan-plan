@@ -1,13 +1,13 @@
 module Pdfs
   class SampleFormat < Prawn::Document
-    def initialize()
+    def initialize
       super(page_size: 'A4') #新規PDF作成
+      # stroke_axis #座標を表示
 
       # 日本語フォントの読み込み
       font_families.update('JP' => { normal: 'app/assets/fonts/ipaexm.ttf', bold: 'app/assets/fonts/ipaexg.ttf' })
       font 'JP'
 
-      # stroke_axis #座標を表示
       text "登山計画書 (登山届)", size: 20, align: :center
       move_down 20
 
@@ -19,38 +19,14 @@ module Pdfs
       end
       move_down 20
 
-      #---- 山域・山名、参考期間、および登山者一覧 ----
+      #-------- 山域・山名、山行期間 --------
       info = [
         [{content: "<b>目的の山域・山名</b>", colspan: 2, inline_format: true}, {content: "", colspan: 4}],
 
         [{content: "<b>山行期間</b>", colspan: 2, inline_format: true}, "", "〜",{content: "", colspan: 2}],
 
         [{content: "役割", rowspan: 2}, {content: "氏名", rowspan: 2}, "生年月日", {content: "性別", rowspan: 2}, "現住所", "緊急連絡先(間柄)" ],
-        ["年齢", "電話番号", "電話番号"],
-
-        #------------- 1人目 --------------
-        [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
-        ["", "", ""],
-
-        #------------- 2人目 --------------
-        [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
-        ["", "", ""],
-
-        #------------- 3人目 --------------
-        [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
-        ["", "", ""],
-
-        #------------- 4人目 --------------
-        [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
-        ["", "", ""],
-
-        #------------- 5人目 --------------
-        [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
-        ["", "", ""],
-
-        #------------- 6人目 --------------
-        [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
-        ["", "", ""],
+        ["年齢", "電話番号", "電話番号"]
       ]
 
       table info, cell_style: {height: 30},
@@ -71,6 +47,18 @@ module Pdfs
         columns(0).row(0..3).border_left_width = 2
         columns(-1).row(0..3).border_right_width = 2
         row(2..3).font_style = :bold
+      end
+
+      #-------- 登山者名簿一覧 --------
+      companions = [
+      [{content: "", rowspan: 2}, {content: "", rowspan: 2}, "", {content: "", rowspan: 2}, "", "" ],
+        ["", "", ""],
+      ] * 6 # (テーブル * 個数)で複数のテーブルを生成できる
+
+      table companions, cell_style: {height: 30},
+      # widthの最大値 520
+      column_widths: [30, 80, 80, 30, 200, 100] do
+        cells.size = 10
       end
       move_down 20
 
@@ -182,7 +170,5 @@ module Pdfs
       end
 
     end
-
-
   end
 end

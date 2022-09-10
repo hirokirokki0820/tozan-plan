@@ -6,13 +6,13 @@
       <label class="form-check-label" for="addProfile">
         プロフィールの個人情報を利用する
       </label>
-      <p style="font-size: 0.8em" class="text-danger">※登山者がユーザーご本人である場合</p>
+      <p style="font-size: 0.8em" class="text-danger">※アカウントタブ「個人情報の追加・編集」よりプロフィール設定できます</p>
     </div>
   <% end %>
 
   <%#------- 氏名（フルネーム） -------- %>
   <div class="mb-3">
-    <%= icon("person") %> <%= f.label "氏名", for: "companionFullName", class: "form-label" %>
+    <%= icon("person") %> <%= f.label "氏名", for: "companionFullName", class: "form-label required" %>
     <%= f.text_field :full_name, placeholder: "例）山田 太郎", class: "form-control", id: "companionFullName", data: { target: "companion.full_name", json: "#{@plan.user.full_name.to_json}" } %>
   </div>
 
@@ -24,7 +24,7 @@
 
   <%#------- 生年月日 -------- %>
   <div class="mb-3">
-    <%= icon("calendar-date") %> <%= f.label "生年月日", for: "companionBirthday", class: "form-label" %>
+    <%= icon("calendar-date") %> <%= f.label "生年月日", for: "companionBirthday", class: "form-label required" %>
     <div data-target="companion.birthday" data-json="<%= @plan.user.birthday.to_json %>">
       <%= f.date_select :birthday,
         {use_month_numbers: true,
@@ -38,13 +38,13 @@
 
   <%#------- 年齢 -------- %>
   <div class="mb-3">
-    <%= icon("person") %> <%= f.label "年齢", for: "companionAge", class: "form-label" %>
+    <%= icon("person") %> <%= f.label "年齢", for: "companionAge", class: "form-label required" %>
     <%= f.number_field :age, class: "form-control", id: "companionAge", placeholder: "半角数字で入力してください 例）20", data: { target: "companion.age", json: "#{@plan.user.age.to_json}" }%>
   </div>
 
   <%#------- 性別 -------- %>
   <div class="mb-3" data-target="companion.gender" data-json="<%= @plan.user.gender.to_json %>">
-    <%= icon("gender-ambiguous") %> <%= f.label "性別", class: "form-label" %>
+    <%= icon("gender-ambiguous") %> <%= f.label "性別", class: "form-label required" %>
       <br>
       <%= f.radio_button :gender, "男" , class: "form-check-input mx-1", id: "companionGenderMale", checked: true %>
       <%= f.label "男性", for: "companionGenderMale" %>
@@ -55,25 +55,25 @@
 
   <%#------- 住所 -------- %>
   <div class="mb-3">
-    <%= icon("mailbox2") %> <%= f.label "住所", for: "companionAddress", class: "form-label" %>
+    <%= icon("mailbox2") %> <%= f.label "住所", for: "companionAddress", class: "form-label required" %>
     <%= f.text_field :address, placeholder: "例）東京都墨田区押上１丁目１−２", class: "form-control", id: "companionAddress", data: { target: "companion.address", json: "#{@plan.user.address.to_json}" }%>
   </div>
 
   <%#------- 電話番号 -------- %>
   <div class="mb-3">
-    <%= icon("telephone-plus") %> <%= f.label "電話番号（自宅or携帯）", for: "companionPhoneNumber", class: "form-label" %>
+    <%= icon("telephone-plus") %> <%= f.label "電話番号（自宅or携帯）", for: "companionPhoneNumber", class: "form-label required" %>
     <%= f.text_field :phone_number, placeholder: "例）090-1234-5678", class: "form-control", id: "companionPhoneNumber", data: { target: "companion.phone_number", json: "#{@plan.user.phone_number.to_json}" }%>
   </div>
 
   <%#------- 緊急連絡先（間柄） -------- %>
   <div class="mb-3">
-    <%= icon("person") %> <%= f.label "緊急連絡先（間柄）", for: "companionEmergencyContact", class: "form-label" %>
+    <%= icon("person") %> <%= f.label "緊急連絡先（間柄）", for: "companionEmergencyContact", class: "form-label required" %>
     <%= f.text_field :emergency_contact, placeholder: "例）山田 花子（母）", class: "form-control", id: "companionEmergencyContact", data: { target: "companion.emergency_contact", json: "#{@plan.user.emergency_contact.to_json}" }%>
   </div>
 
   <%#------- 緊急連絡先の電話番号 -------- %>
   <div class="mb-3">
-    <%= icon("telephone-plus") %> <%= f.label "緊急連絡先の電話番号（自宅or携帯）", for: "companionEmergencyNumber", class: "form-label" %>
+    <%= icon("telephone-plus") %> <%= f.label "緊急連絡先の電話番号（自宅or携帯）", for: "companionEmergencyNumber", class: "form-label required" %>
     <%= f.text_field :emergency_number, placeholder: "例）052-123-4567", class: "form-control", id: "companionEmergencyNumber", data: { target: "companion.emergency_number", json: "#{@plan.user.emergency_number.to_json}" }%>
   </div>
 
