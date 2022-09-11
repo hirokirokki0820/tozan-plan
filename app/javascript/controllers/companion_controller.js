@@ -13,11 +13,12 @@ export default class extends Controller {
                     "address",
                     "phone_number",
                     "emergency_contact",
-                    "emergency_number"
+                    "emergency_number",
+                    "add_address"
                     ]
 
+  // 「プロフィールの個人情報を利用する」をチェックしたら自動で個人情報が入力される
   addProfile() {
-    // const fullName = document.getElementById("companionFullName")
 
     // 氏名
     const userFullName = JSON.parse(this.full_nameTarget.dataset.json)
@@ -40,6 +41,8 @@ export default class extends Controller {
         selects[i].value = Number(defaultBirthday[i])
       }
     }
+
+
     // selects.forEach((select, index) => {
     //   select.value = Number(userBirthday[index])
     // })
@@ -95,6 +98,13 @@ export default class extends Controller {
       this.emergency_numberTarget.value = userEmergencyNumber
     }else{
       this.emergency_numberTarget.value = ""
+    }
+
+    // アドレス帳追加用のチェックボックス
+    if(this.add_profileTarget.checked === true){
+      this.add_addressTarget.style.display = "none"
+    }else{
+      this.add_addressTarget.style.display = "block"
     }
 
 

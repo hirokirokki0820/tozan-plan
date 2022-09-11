@@ -1,5 +1,6 @@
 <% if obj.errors.include?(key) %>
     <% obj.errors.full_messages_for(key).each do |error| %>
-      <li style="list-style:none" class="text-danger fw-bold validation_font_size"><i class="bi bi-exclamation-circle"></i> <%= error %></li>
+      <li style="list-style:none; font-size: 0.8em" class="text-danger validation_font_size">※必須項目です</li>
+      <!-- <li style="list-style:none; font-size: 0.8em" class="text-danger validation_font_size"> <%= error %>必須項目です</li> -->
     <% end %>
 <% end %>

@@ -2,7 +2,7 @@
 
   <% if @companion.new_record? %>
     <div class="form-check mb-3">
-      <input class="form-check-input" type="checkbox" value="" id="addProfile" data-target="companion.add_profile" data-action="change->companion#addProfile">
+      <input class="form-check-input" type="checkbox" value="" id="addProfile" data-companion-target="add_profile" data-action="change->companion#addProfile">
       <label class="form-check-label" for="addProfile">
         プロフィールの個人情報を利用する
       </label>
@@ -11,21 +11,22 @@
   <% end %>
 
   <%#------- 氏名（フルネーム） -------- %>
-  <div class="mb-3">
+  <div class="mb-3 <%= @companion.errors.include?(:full_name) ? "validation_errors" : "" %>">
     <%= icon("person") %> <%= f.label "氏名", for: "companionFullName", class: "form-label required" %>
-    <%= f.text_field :full_name, placeholder: "例）山田 太郎", class: "form-control", id: "companionFullName", data: { target: "companion.full_name", json: "#{@plan.user.full_name.to_json}" } %>
+    <%= f.text_field :full_name, placeholder: "例）山田 太郎", class: "form-control", id: "companionFullName", data: { companion_target: "full_name", json: "#{@plan.user.profile.full_name.to_json}" } %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @companion, key: :full_name %>
   </div>
 
   <%#------- 役割 -------- %>
   <div class="mb-3">
     <%= icon("person") %> <%= f.label "役割", for: "companionRole", class: "form-label" %>
-    <%= f.select :role, [['役割なし', "X"],['リーダー(CL)', "CL" ], ['サブリーダー(SL)', "SL"]], {include_blank: false}, {class: "form-select", id: "companionRole", data: { target: "companion.role" }}%>
+    <%= f.select :role, [['役割なし', "X"],['リーダー(CL)', "CL" ], ['サブリーダー(SL)', "SL"]], {include_blank: false}, {class: "form-select", id: "companionRole", data: { companion_target: "role" }}%>
   </div>
 
   <%#------- 生年月日 -------- %>
   <div class="mb-3">
     <%= icon("calendar-date") %> <%= f.label "生年月日", for: "companionBirthday", class: "form-label required" %>
-    <div data-target="companion.birthday" data-json="<%= @plan.user.birthday.to_json %>">
+    <div data-companion-target="birthday" data-json="<%= @plan.user.profile.birthday.to_json %>">
       <%= f.date_select :birthday,
         {use_month_numbers: true,
         start_year: 1950,
@@ -37,13 +38,14 @@
   </div>
 
   <%#------- 年齢 -------- %>
-  <div class="mb-3">
+  <div class="mb-3 <%= @companion.errors.include?(:age) ? "validation_errors" : "" %>">
     <%= icon("person") %> <%= f.label "年齢", for: "companionAge", class: "form-label required" %>
-    <%= f.number_field :age, class: "form-control", id: "companionAge", placeholder: "半角数字で入力してください 例）20", data: { target: "companion.age", json: "#{@plan.user.age.to_json}" }%>
+    <%= f.number_field :age, class: "form-control", id: "companionAge", placeholder: "半角数字で入力してください 例）20", data: { companion_target: "age", json: "#{@plan.user.profile.age.to_json}" }%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @companion, key: :age %>
   </div>
 
   <%#------- 性別 -------- %>
-  <div class="mb-3" data-target="companion.gender" data-json="<%= @plan.user.gender.to_json %>">
+  <div class="mb-3" data-companion-target="gender" data-json="<%= @plan.user.profile.gender.to_json %>">
     <%= icon("gender-ambiguous") %> <%= f.label "性別", class: "form-label required" %>
       <br>
       <%= f.radio_button :gender, "男" , class: "form-check-input mx-1", id: "companionGenderMale", checked: true %>
@@ -54,28 +56,43 @@
   </div>
 
   <%#------- 住所 -------- %>
-  <div class="mb-3">
+  <div class="mb-3 <%= @companion.errors.include?(:address) ? "validation_errors" : "" %>">
     <%= icon("mailbox2") %> <%= f.label "住所", for: "companionAddress", class: "form-label required" %>
-    <%= f.text_field :address, placeholder: "例）東京都墨田区押上１丁目１−２", class: "form-control", id: "companionAddress", data: { target: "companion.address", json: "#{@plan.user.address.to_json}" }%>
+    <%= f.text_field :address, placeholder: "例）東京都墨田区押上１丁目１−２", class: "form-control", id: "companionAddress", data: { companion_target: "address", json: "#{@plan.user.profile.address.to_json}" }%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @companion, key: :address %>
   </div>
 
   <%#------- 電話番号 -------- %>
-  <div class="mb-3">
+  <div class="mb-3 <%= @companion.errors.include?(:phone_number) ? "validation_errors" : "" %>">
     <%= icon("telephone-plus") %> <%= f.label "電話番号（自宅or携帯）", for: "companionPhoneNumber", class: "form-label required" %>
-    <%= f.text_field :phone_number, placeholder: "例）090-1234-5678", class: "form-control", id: "companionPhoneNumber", data: { target: "companion.phone_number", json: "#{@plan.user.phone_number.to_json}" }%>
+    <%= f.text_field :phone_number, placeholder: "例）090-1234-5678", class: "form-control", id: "companionPhoneNumber", data: { companion_target: "phone_number", json: "#{@plan.user.profile.phone_number.to_json}" }%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @companion, key: :phone_number %>
   </div>
 
   <%#------- 緊急連絡先（間柄） -------- %>
-  <div class="mb-3">
+  <div class="mb-3 <%= @companion.errors.include?(:emergency_contact) ? "validation_errors" : "" %>">
     <%= icon("person") %> <%= f.label "緊急連絡先（間柄）", for: "companionEmergencyContact", class: "form-label required" %>
-    <%= f.text_field :emergency_contact, placeholder: "例）山田 花子（母）", class: "form-control", id: "companionEmergencyContact", data: { target: "companion.emergency_contact", json: "#{@plan.user.emergency_contact.to_json}" }%>
+    <%= f.text_field :emergency_contact, placeholder: "例）山田 花子（母）", class: "form-control", id: "companionEmergencyContact", data: { companion_target: "emergency_contact", json: "#{@plan.user.profile.emergency_contact.to_json}" }%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @companion, key: :emergency_contact %>
   </div>
 
   <%#------- 緊急連絡先の電話番号 -------- %>
-  <div class="mb-3">
+  <div class="mb-3 <%= @companion.errors.include?(:emergency_number) ? "validation_errors" : "" %>">
     <%= icon("telephone-plus") %> <%= f.label "緊急連絡先の電話番号（自宅or携帯）", for: "companionEmergencyNumber", class: "form-label required" %>
-    <%= f.text_field :emergency_number, placeholder: "例）052-123-4567", class: "form-control", id: "companionEmergencyNumber", data: { target: "companion.emergency_number", json: "#{@plan.user.emergency_number.to_json}" }%>
+    <%= f.text_field :emergency_number, placeholder: "例）052-123-4567", class: "form-control", id: "companionEmergencyNumber", data: { companion_target: "emergency_number", json: "#{@plan.user.profile.emergency_number.to_json}" }%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @companion, key: :emergency_number %>
   </div>
+
+  <%#------- 入力内容をアドレス帳に保存したい場合 -------- %>
+  <% if @companion.new_record? %>
+    <div class="px-3 py-2 mb-3 bg-light" data-companion-target="add_address">
+      <div class="form-check">
+        <%= f.check_box :add_address, class: "form-check-input", id: "addAddress" ,as: :boolean %>
+        <%= f.label "入力内容をアドレス帳に保存する", class: "form-check-label", for: "addAddress" %>
+        <p style="font-size: 0.8em" class="text-danger">※以降、登山者情報をアドレス帳から追加できるようになります</p>
+      </div>
+    </div>
+  <% end %>
 
   <%#------- 登録 -------- %>
   <%= f.submit "登録する", class: "btn btn-primary" %>

@@ -14,11 +14,12 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              アカウント
+              <%= icon_with_text("person-circle","アカウントメニュー") %>
+
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
               <li><%= link_to icon_with_text("person-circle","マイページ"), current_user, class: "dropdown-item" %></li>
-              <li><%= link_to icon_with_text("pencil-square","個人情報の追加・編集"), edit_detail_path(current_user), class: "dropdown-item"%></li>
+              <li><%= link_to icon_with_text("pencil-square","個人情報の追加・編集"), current_user.profile.nil? ? new_user_profile_path(current_user) : edit_user_profile_path(current_user.id, current_user.profile.id), class: "dropdown-item"%></li>
               <li><%= link_to icon_with_text("gear","アカウント設定"), edit_user_path(current_user), class: "dropdown-item"%></li>
               <li>
                 <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><%= icon_with_text("box-arrow-right","ログアウト") %></a>

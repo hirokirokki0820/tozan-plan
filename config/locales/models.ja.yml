@@ -3,6 +3,7 @@ ja:
     models:
       user: ユーザー
       plan: 計画書
+      companion: 登山者情報
     attributes:
       user:
         name: ユーザー名
@@ -16,3 +17,13 @@ ja:
         submit_to: 提出先
         start_day: 入山日
         last_day: 下山日
+      companion:
+        full_name: 氏名
+        role: 役割
+        birthday: 誕生日
+        age: 年齢
+        gender: 性別
+        address: 住所
+        phone_number: 電話番号
+        emergency_contact: 緊急連絡先
+        emergency_number: 緊急連絡先の電話番号

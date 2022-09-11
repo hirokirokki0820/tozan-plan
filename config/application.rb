@@ -21,7 +21,7 @@ module TozanPlan
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     # config.eager_load_paths << Rails.root.join("extras")
     # config.eager_load_paths += %W(#{Rails.root}/app/assets/pdfs)
-    config.paths.add 'app/assets', eager_load: true
+    config.paths.add 'app/assets/pdfs', eager_load: true
 
     # Active Record の暗号化キー設定
     config.active_record.encryption.primary_key = ENV['PRIMARY_KEY']

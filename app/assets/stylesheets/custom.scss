@@ -27,6 +27,13 @@ h1 {
   color: #ccc;
 }
 
+// エラー時の入力フォームのスタイリング
+.validation_errors {
+  input {
+    @extend .is-invalid;
+  }
+}
+
 //必須項目ラベルに「＊」印をつける
 label.required:after {
   content:" *";

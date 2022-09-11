@@ -1,4 +1,5 @@
 class Companion < ApplicationRecord
+  attr_accessor :add_address
   encrypts :full_name, :age, :birthday, :address, :phone_number, :emergency_contact, :emergency_number
   belongs_to :plan
 

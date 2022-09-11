@@ -4,7 +4,7 @@ module Pdfs
       @plan = Plan.find(params[:plan_id])
       respond_to do |format|
         format.pdf do
-          climbing_plan = Pdfs::ClimbingPlan.new(@plan).render
+          climbing_plan = ClimbingPlan.new(@plan).render
           send_data climbing_plan,
             filename: "#{@plan.destination}_登山計画書.pdf",
             type: 'application/pdf',

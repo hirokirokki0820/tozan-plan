@@ -60,7 +60,7 @@ class CompanionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def companion_params
-      params.require(:companion).permit(:full_name, :role, :birthday, :age, :gender, :address, :phone_number, :emergency_contact, :emergency_number)
+      params.require(:companion).permit(:full_name, :role, :birthday, :age, :gender, :address, :phone_number, :emergency_contact, :emergency_number, :add_address)
     end
 
     def require_same_user
