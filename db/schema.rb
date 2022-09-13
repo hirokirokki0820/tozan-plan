@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_11_115451) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_13_061708) do
   create_table "address_books", force: :cascade do |t|
     t.string "full_name"
     t.string "gender"
@@ -53,21 +53,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_115451) do
     t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
-  create_table "profiles", force: :cascade do |t|
-    t.string "full_name"
-    t.string "gender"
-    t.date "birthday"
-    t.integer "age"
-    t.string "address"
-    t.string "phone_number"
-    t.string "emergency_contact"
-    t.string "emergency_number"
-    t.string "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
-  end
-
   create_table "users", id: :string, force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -81,18 +66,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_115451) do
     t.datetime "activation_sent_at"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
-    t.string "full_name"
-    t.date "birthday"
-    t.integer "age"
-    t.string "gender"
-    t.string "address"
-    t.string "phone_number"
-    t.string "emergency_contact"
-    t.string "emergency_number"
   end
 
   add_foreign_key "address_books", "users"
   add_foreign_key "companions", "plans"
   add_foreign_key "plans", "users"
-  add_foreign_key "profiles", "users"
 end
