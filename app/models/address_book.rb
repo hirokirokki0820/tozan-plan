@@ -1,5 +1,5 @@
 class AddressBook < ApplicationRecord
-  encrypts :full_name, :gender, :birthday, :age, :address, :phone_number, :emergency_contact, :emergency_number
+  encrypts :full_name, :gender, :address, :phone_number, :emergency_contact, :emergency_number
   belongs_to :user
 
   with_options presence: true do
