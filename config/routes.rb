@@ -8,9 +8,8 @@ Rails.application.routes.draw do
 
   resources :users, except: [:new] do
     resources :profiles, only: [:new, :edit, :create, :update]
-    collection do
-      resources :details, only: [:edit, :update]
-    end
+    resources :address_books
+    resources :add_addresses, only: [:new]
   end
 
   resources :account_activations, only: [:edit]

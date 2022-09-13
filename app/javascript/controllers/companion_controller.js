@@ -4,7 +4,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
 
   static targets = [
-                    "add_profile",
                     "full_name",
                     "role",
                     "birthday",
@@ -14,99 +13,226 @@ export default class extends Controller {
                     "phone_number",
                     "emergency_contact",
                     "emergency_number",
-                    "add_address"
+                    "add_address",
+                    "select_addresses",
+
+                    "add_address_book",
+                    "full_name2",
+                    "birthday2",
+                    "age2",
+                    "gender2",
+                    "address2",
+                    "phone_number2",
+                    "emergency_contact2",
+                    "emergency_number2"
                     ]
 
-  // 「プロフィールの個人情報を利用する」をチェックしたら自動で個人情報が入力される
-  addProfile() {
+  // 「アドレス帳から追加」で名前を選択したら自動で個人情報が入力される
+  selectAddressBook(){
+    // アドレス超のidを取得
+    const selectedValue = this.select_addressesTarget.value
+    const addressBooks = JSON.parse(this.select_addressesTarget.dataset.json)
 
-    // 氏名
-    const userFullName = JSON.parse(this.full_nameTarget.dataset.json)
-    if(this.add_profileTarget.checked === true){
-      this.full_nameTarget.value = userFullName
-    }else{
-      this.full_nameTarget.value = ""
-    }
-
-    // 誕生日
-    const userBirthday = JSON.parse(this.birthdayTarget.dataset.json).split("-")
-    const selects = this.birthdayTarget.querySelectorAll("select")
+    // 各フォームの要素を格納
+    const fullNameForm = this.full_nameTarget
+    const birthdayForm = this.birthdayTarget.querySelectorAll("select")
     const defaultBirthday = ["1990", "1", "1"]
-    if(this.add_profileTarget.checked === true){
-      for(let i=0; i<selects.length; i++){
-        selects[i].value = Number(userBirthday[i])
-      }
-    }else{
-      for(let i=0; i<selects.length; i++){
-        selects[i].value = Number(defaultBirthday[i])
-      }
-    }
+    const ageForm = this.ageTarget
+    const genderForm = this.genderTarget.querySelectorAll("input")
+    const addressForm = this.addressTarget
+    const phoneNumberForm = this.phone_numberTarget
+    const emergencyContactForm = this.emergency_contactTarget
+    const emergencyNumberForm = this.emergency_numberTarget
+    const addAddressCheckbox = this.add_addressTarget
 
 
-    // selects.forEach((select, index) => {
-    //   select.value = Number(userBirthday[index])
-    // })
+    // 「追加」ボタンを押したら個人情報を追加
+    // this.add_address_bookTarget.onclick = () =>{
+      addressBooks.forEach((addressBook, index) => {
+        if(Number(addressBook.id) === Number(selectedValue)){
+          // 氏名
+          fullNameForm.value = addressBook.full_name
 
-    // 年齢
-    const userAge = JSON.parse(this.ageTarget.dataset.json)
-    if(this.add_profileTarget.checked === true){
-      this.ageTarget.value = userAge
-    }else{
-      this.ageTarget.value = ""
-    }
+          // 生年月日
+          for(let i=0; i<birthdayForm.length; i++){
+            birthdayForm[i].value = Number(addressBook.birthday.split("-")[i])
+          }
+          // 年齢
+          ageForm.value = addressBook.age
 
-    // 性別
-    const userGender = JSON.parse(this.genderTarget.dataset.json)
-    const gender = this.genderTarget.querySelectorAll("input")
-    if(this.add_profileTarget.checked === true){
-      if(userGender === "男"){
-        gender[0].checked = true
-      }else{
-        gender[1].checked = true
-      }
-    }else{
-      gender[0].checked = true
-    }
+          // 性別
+          if(addressBook.gender === "男"){
+            genderForm[0].checked = true
+          }else{
+            genderForm[1].checked = true
+          }
 
-    // 住所
-    const userAddress = JSON.parse(this.addressTarget.dataset.json)
-    if(this.add_profileTarget.checked === true){
-      this.addressTarget.value = userAddress
-    }else{
-      this.addressTarget.value = ""
-    }
+          // 住所
+          addressForm.value = addressBook.address
 
-    // 電話番号
-    const userPhoneNumber = JSON.parse(this.phone_numberTarget.dataset.json)
-    if(this.add_profileTarget.checked === true){
-      this.phone_numberTarget.value = userPhoneNumber
-    }else{
-      this.phone_numberTarget.value = ""
-    }
+          // 電話番号
+          phoneNumberForm.value = addressBook.phone_number
 
-    // 緊急連絡先（間柄）
-    const userEmergencyContact = JSON.parse(this.emergency_contactTarget.dataset.json)
-    if(this.add_profileTarget.checked === true){
-      this.emergency_contactTarget.value = userEmergencyContact
-    }else{
-      this.emergency_contactTarget.value = ""
-    }
+          // 緊急連絡先（間柄）
+          emergencyContactForm.value = addressBook.emergency_contact
 
-    // 緊急連絡先の電話番号
-    const userEmergencyNumber = JSON.parse(this.emergency_numberTarget.dataset.json)
-    if(this.add_profileTarget.checked === true){
-      this.emergency_numberTarget.value = userEmergencyNumber
-    }else{
-      this.emergency_numberTarget.value = ""
-    }
+          // 緊急連絡先の電話番号
+          emergencyNumberForm.value = addressBook.emergency_number
 
-    // アドレス帳追加用のチェックボックス
-    if(this.add_profileTarget.checked === true){
-      this.add_addressTarget.style.display = "none"
-    }else{
-      this.add_addressTarget.style.display = "block"
-    }
+          // 「アドレス帳に保存する」 チェックボックス
+          addAddressCheckbox.style.display = "none"
 
-
+        }else if(selectedValue === ""){ // 「選択なし」の場合
+          fullNameForm.value = "" // 氏名
+          for(let i=0; i<birthdayForm.length; i++){ //生年月日
+            birthdayForm[i].value = Number(defaultBirthday[i])
+          }
+          ageForm.value = "" // 年齢
+          genderForm[0].checked = true // 性別
+          addressForm.value = "" // 住所
+          phoneNumberForm.value = "" // 電話番号
+          emergencyContactForm.value = "" // 緊急連絡先
+          emergencyNumberForm.value = "" // 緊急連絡先の電話番号
+          addAddressCheckbox.style.display = "block"
+        }
+      })
+    // }
   }
+
+  // フォーム入力すると隠しフィールドにも同じ内容がリアルタイムで入力される
+  copyFullName() {
+    // 住所
+    this.full_name2Target.value = this.full_nameTarget.value
+  }
+
+  copyAge() {
+    // 年齢
+    this.age2Target.value = this.ageTarget.value
+  }
+
+  copyGender() {
+    // 性別
+    const genderForm = this.genderTarget.querySelectorAll("input")
+    const gender2Form = this.gender2Target.querySelectorAll("input")
+    if(genderForm[0].checked === true){
+      gender2Form[0].checked = true
+    }else{
+      gender2Form[1].checked = true
+    }
+  }
+
+  copyAddress() {
+    // 住所
+    this.address2Target.value = this.addressTarget.value
+  }
+
+  copyPhoneNumber() {
+    // 電話番号
+    this.phone_number2Target.value = this.phone_numberTarget.value
+  }
+
+  copyEmergencyContact() {
+    // 緊急連絡先（間柄）
+    this.emergency_contact2Target.value = this.emergency_contactTarget.value
+  }
+
+  copyEmergencyNumber() {
+    // 緊急連絡先の電話番号
+    this.emergency_number2Target.value = this.emergency_numberTarget.value
+  }
+
+
+
+  // 「入力内容をアドレス帳に保存する」をチェックしたら隠しフィールドに入力内容を転写→「登録する」で@address_bookに保存
+  // addAddressBook() {
+  //   // 氏名
+  //   if(this.add_address_bookTarget.checked === true){
+  //     this.full_name2Target.value = this.full_nameTarget.value
+  //   }else{
+  //     this.full_name2Target.value = ""
+  //   }
+
+  //   // 誕生日
+  //   const birthdayForm = this.birthdayTarget.querySelectorAll("select")
+  //   const birthday2Form = this.birthday2Target.querySelectorAll("select")
+  //   const defaultBirthday = ["1990", "1", "1"]
+  //   if(this.add_address_bookTarget.checked === true){
+  //     for(let i=0; i<birthday2Form.length; i++){
+  //       birthday2Form[i].value = Number(birthdayForm[i].value)
+  //     }
+  //   }else{
+  //     for(let i=0; i<birthday2Form.length; i++){
+  //       birthday2Form[i].value = Number(defaultBirthday[i])
+  //     }
+  //   }
+
+
+  //   // // selects.forEach((select, index) => {
+  //   // //   select.value = Number(userBirthday[index])
+  //   // // })
+
+  //   // 年齢
+  //   if(this.add_address_bookTarget.checked === true){
+  //     this.age2Target.value = this.ageTarget.value
+  //   }else{
+  //     this.age2Target.value = ""
+  //   }
+
+  //   // 性別
+  //   const genderForm = this.genderTarget.querySelectorAll("input")
+  //   const gender2Form = this.gender2Target.querySelectorAll("input")
+  //   if(this.add_address_bookTarget.checked === true){
+  //     if(genderForm[0].checked === true){
+  //       gender2Form[0].checked = true
+  //     }else{
+  //       gender2Form[1].checked = true
+  //     }
+  //   }else{
+  //     gender2Form[0].checked = true
+  //   }
+
+  //   // 住所
+  //   if(this.add_address_bookTarget.checked === true){
+  //     this.address2Target.value = this.addressTarget.value
+  //   }else{
+  //     this.address2Target.value = ""
+  //   }
+
+  //   // 電話番号
+  //   if(this.add_address_bookTarget.checked === true){
+  //     this.phone_number2Target.value = this.phone_numberTarget.value
+  //   }else{
+  //     this.phone_number2Target.value = ""
+  //   }
+
+  //   // 緊急連絡先（間柄）
+  //   if(this.add_address_bookTarget.checked === true){
+  //     this.emergency_contact2Target.value = this.emergency_contactTarget.value
+  //   }else{
+  //     this.emergency_contact2Target.value = ""
+  //   }
+
+  //   // 緊急連絡先の電話番号
+  //   if(this.add_address_bookTarget.checked === true){
+  //     this.emergency_number2Target.value = this.emergency_numberTarget.value
+  //   }else{
+  //     this.emergency_number2Target.value = ""
+  //   }
+
+  // }
+
+  // copyFullName() {
+  //   // 氏名
+  //   this.full_name2Target.value = this.full_nameTarget.value
+  // }
+
+  // copyBirthday() {
+  //   // 生年月日
+  //   const birthdayForm = this.birthdayTarget.querySelectorAll("select")
+  //   const birthday2Form = this.birthday2Target.querySelectorAll("select")
+  //     for(let i=0; i<birthday2Form.length; i++){
+  //       birthday2Form[i].value = Number(birthdayForm[i].value)
+  //     }
+  // }
+
 }

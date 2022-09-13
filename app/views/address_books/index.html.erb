@@ -1,0 +1,49 @@
+<h1><%= current_user.name %>さんのアドレス帳</h1>
+
+<!-- アドレス帳一覧 -->
+<div class="card shadow mt-3 mb-5">
+  <div class="card-header">
+    <%= icon_with_text("book", "アドレス帳一覧") %>
+  </div>
+
+  <div class="card-body mx-3">
+    <%= link_to icon_with_text("plus-circle", "追加"),
+                    new_user_address_book_path(@user),
+                    class: "btn__basic__m btn__red mb-3 mt-1 d-block"
+    %>
+    <div class="row py-2">
+      <div class="col-4 mt-auto fw-bold">
+        氏名
+      </div>
+      <div class="col-3 mt-auto fw-bold">
+        性別
+      </div>
+      <div class="col-5 mt-auto fw-bold d-flex justify-content-end">
+        編集/削除
+      </div>
+      <hr class="mt-2">
+    </div>
+    <div class="row">
+      <% @address_books.each do |address| %>
+        <div class="col-4 mt-auto">
+          <%= address.full_name %>
+        </div>
+        <div class="col-3 mt-auto">
+          <%= address.gender %>
+        </div>
+
+        <div class="col-5 text-end">
+          <%#= link_to icon("file-earmark-pdf"), plan_climbing_plan_index_path(plan, format: "pdf"), class: "btn btn-outline-danger" %>
+          <%#= link_to icon("clipboard-check"), plan, class: "btn btn-outline-success" %>
+          <%= link_to "編集", edit_user_address_book_path(address.user_id, address.id) , class: "btn btn-outline-primary" %>
+          <%= link_to icon("trash"), user_address_book_path(address.user_id, address.id), class: "btn btn-outline-danger", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？"} %>
+        </div>
+        <hr class="mt-2" style="border: 1px solid #ccc">
+      <% end %>
+    </div>
+
+    <!-- <div class="d-flex justify-content-end mt-3">
+      <%#= paginate @cats %>
+    </div> -->
+  </div>
+</div>

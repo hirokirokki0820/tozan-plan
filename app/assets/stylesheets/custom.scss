@@ -48,6 +48,16 @@ label.required:after {
   color: #555;
 }
 
+// 下向きの矢印（三角形）
+.arrow__triangle{
+  margin: 0 auto;
+  width: 0;
+  height: 0;
+  border-right: 100px solid transparent;
+  border-top: 10px solid #4682b4;
+  border-left: 100px solid transparent;
+}
+
 /********* ハンバーガーメニューのスタイル *********/
 .navbar-toggler{
   border: none !important;

@@ -1,0 +1,2 @@
+module AddAddressesHelper
+end

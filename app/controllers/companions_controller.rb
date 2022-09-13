@@ -16,6 +16,8 @@ class CompanionsController < ApplicationController
   # GET /companions/new
   def new
     @companion = Companion.new
+    @address_book = AddressBook.new
+    @address_book.user = current_user
   end
 
   # GET /companions/1/edit
@@ -26,10 +28,24 @@ class CompanionsController < ApplicationController
   def create
     @companion = Companion.new(companion_params)
     @companion.plan = @plan
-    if @companion.save
-      redirect_to @plan, notice: "登山者が登録されました"
-    else
-      render :new, status: :unprocessable_entity
+
+    if @plan.companions.length < 6 # @companion の登録上限（最大６人まで）
+      if @companion.add_address == "1" # 「アドレス帳に保存する」にチェックを入れた時の処理
+        if @companion.save
+          redirect_to new_user_add_address_path(user_id: current_user.id, companion_id: @companion.id), notice: "登山者の登録、およびアドレス帳への登録が完了しました"
+          # ↑ add_addresses_controller.rb の newアクションにリダイレクト(user_id と companion_id をクリエパラメータで渡す)
+        else
+          render :new, status: :unprocessable_entity
+        end
+      else # 通常の保存処理
+        if @companion.save
+          redirect_to @plan, notice: "登山者が登録されました"
+        else
+          render :new, status: :unprocessable_entity
+        end
+      end
+    else # @companion の登録上限に達した時の処理
+      redirect_to @plan, alert: "最大登録数は6人までです"
     end
   end
 
@@ -60,12 +76,16 @@ class CompanionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def companion_params
-      params.require(:companion).permit(:full_name, :role, :birthday, :age, :gender, :address, :phone_number, :emergency_contact, :emergency_number, :add_address)
+      params.require(:companion).permit(:full_name, :role, :birthday, :age, :gender, :address, :phone_number, :emergency_contact, :emergency_number, :add_address, :selected_id)
+    end
+
+    def address_book_params
+      params.require(:address_book).permit(:full_name, :birthday, :age, :gender, :address, :phone_number, :emergency_contact, :emergency_number)
     end
 
     def require_same_user
       if current_user != @plan.user
-        flash[:alert] = "許可されていない操作です。プロフィールの編集、削除は作成者ご自身のみ可能です。"
+        flash[:alert] = "ユーザーご本人以外のアクセスは禁止されています"
         redirect_to root_path
       end
     end

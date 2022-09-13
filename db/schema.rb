@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_10_115200) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_11_115451) do
+  create_table "address_books", force: :cascade do |t|
+    t.string "full_name"
+    t.string "gender"
+    t.date "birthday"
+    t.integer "age"
+    t.string "address"
+    t.string "phone_number"
+    t.string "emergency_contact"
+    t.string "emergency_number"
+    t.string "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_address_books_on_user_id"
+  end
+
   create_table "companions", force: :cascade do |t|
     t.string "role"
     t.string "full_name"
@@ -76,6 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_115200) do
     t.string "emergency_number"
   end
 
+  add_foreign_key "address_books", "users"
   add_foreign_key "companions", "plans"
   add_foreign_key "plans", "users"
   add_foreign_key "profiles", "users"

@@ -12,12 +12,12 @@ class ProfilesController < ApplicationController
 
   def create
     @profile = Profile.new(profile_params)
-    @profile.user_id = @user.id
+    @profile.user = @user
     if @profile.save
       flash[:notice] = "個人情報が登録されました"
       redirect_to @user
     else
-      render "edit", status: :unprocessable_entity
+      render "new", status: :unprocessable_entity
     end
   end
 
@@ -39,7 +39,7 @@ class ProfilesController < ApplicationController
     end
 
     def profile_params
-      params.require(:profile).permit(:full_name, :gender, :birthday, :age, :address, :phone_number, :emergency_contact, :emergency_number)
+      params.require(:profile).permit(:full_name, :gender, :birthday, :age, :address, :phone_number, :emergency_contact, :emergency_number, :add_address)
     end
 
     def require_same_user

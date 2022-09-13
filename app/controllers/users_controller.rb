@@ -52,7 +52,7 @@ class UsersController < ApplicationController
 
     def require_same_user
       if current_user != @user
-        flash[:alert] = "許可されていない操作です。プロフィールの編集、削除は作成者ご自身のみ可能です。"
+        flash[:alert] = "ユーザーご本人以外のアクセスは禁止されています"
         redirect_to @user
       end
     end

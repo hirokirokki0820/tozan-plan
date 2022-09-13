@@ -1,0 +1,65 @@
+<%= form_with(model: [@user, @address_book], local: true, class: "mb-5") do |f| %>
+
+  <div class="mb-3 <%= @address_book.errors.include?(:full_name) ? "validation_errors" : "" %>">
+    <%= icon("person") %> <%= f.label "氏名", for: "addressFullName", class: "form-label" %>
+    <%= f.text_field :full_name, placeholder: "例）山田 太郎", class: "form-control", id: "addressFullName"%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @address_book, key: :full_name %>
+  </div>
+
+  <div class="mb-3">
+    <%= icon("calendar-date") %> <%= f.label "生年月日", class: "form-label" %>
+    <div class="">
+      <%= f.date_select :birthday,
+        {use_month_numbers: true,
+        start_year: 1950,
+        end_year: (Time.now.year - 10),
+        default: Date.new(1990, 1, 1),
+        date_separator: '/ '},
+        {class: "form__select"} %>
+    </div>
+  </div>
+
+  <div class="mb-3 <%= @address_book.errors.include?(:age) ? "validation_errors" : "" %>">
+    <%= icon("person") %> <%= f.label "年齢", for: "addressAge", class: "form-label" %>
+    <%= f.number_field :age, class: "form-control", id: "addressAge", placeholder: "半角数字で入力してください 例）20"%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @address_book, key: :age %>
+  </div>
+
+  <div class="mb-3">
+    <%= icon("gender-ambiguous") %> <%= f.label "性別", class: "form-label" %>
+      <br>
+      <%= f.radio_button :gender, "男" , class: "form-check-input mx-1", id: "addressGenderMale", checked: true %>
+      <%= f.label "男性", for: "addressGenderMale" %>
+      <span class="mx-1"></span>
+      <%= f.radio_button :gender, "女" , class: "form-check-input mx-1", id: "addressGenderFemale"%>
+      <%= f.label "女性", for: "addressGenderFemale" %>
+
+  </div>
+
+  <div class="mb-3 <%= @address_book.errors.include?(:address) ? "validation_errors" : "" %>">
+    <%= icon("mailbox2") %> <%= f.label "住所", for: "addressAddress", class: "form-label" %>
+    <%= f.text_field :address, placeholder: "例）東京都墨田区押上１丁目１−２", class: "form-control", id: "addressAddress"%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @address_book, key: :address %>
+  </div>
+
+  <div class="mb-3 <%= @address_book.errors.include?(:phone_number) ? "validation_errors" : "" %>">
+    <%= icon("telephone-plus") %> <%= f.label "電話番号（自宅or携帯）", for: "addressPhoneNumber", class: "form-label" %>
+    <%= f.text_field :phone_number, placeholder: "例）090-1234-5678", class: "form-control", id: "addressPhoneNumber"%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @address_book, key: :phone_number %>
+  </div>
+
+  <div class="mb-3 <%= @address_book.errors.include?(:emergency_contact) ? "validation_errors" : "" %>">
+    <%= icon("person") %> <%= f.label "緊急連絡先（間柄）", for: "addressEmergencyContact", class: "form-label" %>
+    <%= f.text_field :emergency_contact, placeholder: "例）山田 花子（母）", class: "form-control", id: "addressEmergencyContact"%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @address_book, key: :emergency_contact %>
+  </div>
+
+  <div class="mb-3 <%= @address_book.errors.include?(:emergency_number) ? "validation_errors" : "" %>">
+    <%= icon("telephone-plus") %> <%= f.label "緊急連絡先の電話番号（自宅or携帯）", for: "addressEmergencyNumber", class: "form-label" %>
+    <%= f.text_field :emergency_number, placeholder: "例）052-123-4567", class: "form-control", id: "addressEmergencyNumber"%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @address_book, key: :emergency_number %>
+  </div>
+
+  <%= f.submit "登録する", class: "btn btn-primary" %>
+  <%= link_to "キャンセル", user_address_books_path(current_user) , class: "btn btn-secondary"%>
+<% end %>

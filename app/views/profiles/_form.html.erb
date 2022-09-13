@@ -1,8 +1,9 @@
 <%= form_with(model: [@user, @profile], local: true, class: "mb-5") do |f| %>
 
-  <div class="mb-3">
+  <div class="mb-3 <%= @profile.errors.include?(:full_name) ? "validation_errors" : "" %>">
     <%= icon("person") %> <%= f.label "氏名", for: "userFullName", class: "form-label" %>
     <%= f.text_field :full_name, placeholder: "例）山田 太郎", class: "form-control", id: "userFullName"%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @profile, key: :full_name %>
   </div>
 
   <div class="mb-3">
@@ -18,9 +19,10 @@
     </div>
   </div>
 
-  <div class="mb-3">
+  <div class="mb-3 <%= @profile.errors.include?(:age) ? "validation_errors" : "" %>">
     <%= icon("person") %> <%= f.label "年齢", for: "userAge", class: "form-label" %>
     <%= f.number_field :age, class: "form-control", id: "userAge", placeholder: "半角数字で入力してください 例）20"%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @profile, key: :age %>
   </div>
 
   <div class="mb-3">
@@ -31,28 +33,42 @@
       <span class="mx-1"></span>
       <%= f.radio_button :gender, "女" , class: "form-check-input mx-1", id: "genderFemale"%>
       <%= f.label "女性", for: "genderFemale" %>
-
   </div>
 
-  <div class="mb-3">
+  <div class="mb-3 <%= @profile.errors.include?(:address) ? "validation_errors" : "" %>">
     <%= icon("mailbox2") %> <%= f.label "住所", for: "userAddress", class: "form-label" %>
     <%= f.text_field :address, placeholder: "例）東京都墨田区押上１丁目１−２", class: "form-control", id: "userAddress"%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @profile, key: :address %>
   </div>
 
-  <div class="mb-3">
+  <div class="mb-3 <%= @profile.errors.include?(:phone_number) ? "validation_errors" : "" %>">
     <%= icon("telephone-plus") %> <%= f.label "電話番号（自宅or携帯）", for: "userPhoneNumber", class: "form-label" %>
     <%= f.text_field :phone_number, placeholder: "例）090-1234-5678", class: "form-control", id: "userPhoneNumber"%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @profile, key: :phone_number %>
   </div>
 
-  <div class="mb-3">
+  <div class="mb-3 <%= @profile.errors.include?(:emergency_contact) ? "validation_errors" : "" %>">
     <%= icon("person") %> <%= f.label "緊急連絡先（間柄）", for: "userEmergencyContact", class: "form-label" %>
     <%= f.text_field :emergency_contact, placeholder: "例）山田 花子（母）", class: "form-control", id: "userEmergencyContact"%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @profile, key: :emergency_contact %>
   </div>
 
-  <div class="mb-3">
+  <div class="mb-3 <%= @profile.errors.include?(:emergency_number) ? "validation_errors" : "" %>">
     <%= icon("telephone-plus") %> <%= f.label "緊急連絡先の電話番号（自宅or携帯）", for: "userEmergencyNumber", class: "form-label" %>
     <%= f.text_field :emergency_number, placeholder: "例）052-123-4567", class: "form-control", id: "userEmergencyNumber"%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @profile, key: :emergency_number %>
   </div>
+
+  <%#------- 入力内容をアドレス帳に保存したい場合 -------- %>
+  <% if @profile.new_record? %>
+    <div class="px-3 py-2 mb-3 bg-light">
+      <div class="form-check">
+        <%= f.check_box :add_address, class: "form-check-input", id: "addAddressFromProfile" ,as: :boolean %>
+        <%= f.label "入力内容をアドレス帳に保存する", class: "form-check-label", for: "addAddressFromProfile" %>
+        <p style="font-size: 0.8em" class="text-danger">※以降、登山者情報をアドレス帳から追加できるようになります</p>
+      </div>
+    </div>
+  <% end %>
 
   <%= f.submit "登録する", class: "btn btn-primary" %>
   <%= link_to "キャンセル", current_user , class: "btn btn-secondary"%>

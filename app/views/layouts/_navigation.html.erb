@@ -9,8 +9,15 @@
           <%= link_to icon_with_text("download", "計画書をダウンロード"), sample_format_index_path(format: "pdf"), class: "nav-link" %>
         </li>
         <% if logged_in? %>
-          <li class="nav-item">
-            <%= link_to icon_with_text("file-earmark", "新規計画書作成"), new_plan_path, class: "nav-link" %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <%= icon_with_text("file-earmark","計画書メニュー") %>
+
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              <li><%= link_to icon_with_text("list-ul","計画書リスト"), current_user, class: "dropdown-item" %></li>
+              <li><%= link_to icon_with_text("file-earmark", "新規計画書作成"), new_plan_path, class: "dropdown-item" %></li>
+            </ul>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -19,7 +26,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
               <li><%= link_to icon_with_text("person-circle","マイページ"), current_user, class: "dropdown-item" %></li>
-              <li><%= link_to icon_with_text("pencil-square","個人情報の追加・編集"), current_user.profile.nil? ? new_user_profile_path(current_user) : edit_user_profile_path(current_user.id, current_user.profile.id), class: "dropdown-item"%></li>
+              <li><%= link_to icon_with_text("book","アドレス帳"), user_address_books_path(current_user), class: "dropdown-item"%></li>
               <li><%= link_to icon_with_text("gear","アカウント設定"), edit_user_path(current_user), class: "dropdown-item"%></li>
               <li>
                 <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><%= icon_with_text("box-arrow-right","ログアウト") %></a>
