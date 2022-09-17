@@ -3,6 +3,7 @@ class ClimbingPlan < Prawn::Document
     super(page_size: 'A4') #新規PDF作成
     @plan = plan
     @companions = @plan.companions.order(role: 'ASC')
+    @schedules = @plan.plan_schedules.order(date: 'ASC')
 
     # 日本語フォントの読み込み
     font_families.update('JP' => { normal: 'app/assets/fonts/ipaexm.ttf', bold: 'app/assets/fonts/ipaexg.ttf' })
@@ -123,18 +124,41 @@ class ClimbingPlan < Prawn::Document
     end
     move_down 10
 
+    # 行動予定の変数化
+    if @schedules.present?
+      @schedules.each_with_index do |schedule, i|
+        instance_variable_set("@plan#{i+1}_schedule_tmp" , []) # 初期値の設定
+        if schedule.present?
+          schedule.schedule_spots.each_with_index do |spot, j|
+            str_spot = "#{spot.spot}"
+            str_time = "(#{spot.time.strftime('%H:%M') if spot.time.present? })"
+            if spot.time.nil?
+              str_all = str_spot
+            else
+              str_all = str_spot + str_time
+            end
+            eval("@plan#{i+1}_schedule_tmp[#{j}] = str_all")
+          end
+        end
+        eval("@plan#{i+1}_schedule = @plan#{i+1}_schedule_tmp.join(' ⇒ ')")
+      end
+    end
+
     schedule = [
       ["日程", "行動予定"],
-      ["(1) 10/25", "◯◯登山口--◯◯大雪渓--◯◯小屋--白馬岳山頂--白馬山荘"],
-      ["(2) 10/26", "白馬山荘--◯◯尾根--◯◯池--◯◯登山口"],
-      ["(3)", ""],
-      ["(4)", ""],
-      ["(5)", ""],
+      ["(1)  #{@schedules[0].date.strftime('%m/%d') unless @schedules[0].nil?}", "#{@plan1_schedule}"],
+      ["(2)  #{@schedules[1].date.strftime('%m/%d') unless @schedules[1].nil?}", "#{@plan2_schedule}"],
+      ["(3)  #{@schedules[2].date.strftime('%m/%d') unless @schedules[2].nil?}", "#{@plan3_schedule}"],
+      ["(4)  #{@schedules[3].date.strftime('%m/%d') unless @schedules[3].nil?}", "#{@plan4_schedule}"],
+      ["(5)  #{@schedules[4].date.strftime('%m/%d') unless @schedules[4].nil?}", "#{@plan5_schedule}"],
     ]
 
-    table schedule, cell_style: {height: 30},
-    column_widths: [120, 400] do
+    table schedule, cell_style: {height: 45},
+    column_widths: [100, 420] do
       cells.size = 10
+      cells.leading = 3 # 文字の行間( line height )
+      row(0).size = 12
+      row(1..-1).columns(0).size = 12
       row(0).border_top_width = 2
       row(0).border_bottom_width = 2
       columns(0).row(0..5).border_left_width = 2
@@ -146,9 +170,9 @@ class ClimbingPlan < Prawn::Document
     escape_route = [
       ["エスケープルート\n(荒天・非常時対策)", ""]
     ]
-    table escape_route, cell_style: {height: 50},
+    table escape_route, cell_style: {height: 45},
     # max_width: 520
-    column_widths: [120, 400] do
+    column_widths: [100, 420] do
       cells.size = 10
       row(0).border_top_width = 2
       row(0).border_bottom_width = 2
@@ -156,7 +180,7 @@ class ClimbingPlan < Prawn::Document
       columns(-1).row(0).border_right_width = 2
 
     end
-    move_down 20
+    move_down 10
 
     belongings_title = [["◎", "持ち物"]]
     table belongings_title, column_widths: [25, 55] do
@@ -175,14 +199,14 @@ class ClimbingPlan < Prawn::Document
     ]
 
     table belongings, cell_style: {height: 25},
-    column_widths: [120, 400] do
+    column_widths: [100, 420] do
       cells.size = 10
       row(0).border_top_width = 2
       columns(0).row(0..5).border_left_width = 2
       columns(-1).row(0..5).border_right_width = 2
       row(-1).border_bottom_width = 2
     end
-    move_down 20
+    move_down 10
 
     image_title = [["◎", "概念図"]]
     table image_title, column_widths: [25, 55] do
@@ -191,7 +215,7 @@ class ClimbingPlan < Prawn::Document
     end
     move_down 10
 
-    bounding_box([0, cursor], width: 520, height: 220) do
+    bounding_box([0, cursor], width: 520, height: 200) do
       # 周りに枠線をつける
       transparent(1) { stroke_bounds }
     end
