@@ -1,13 +1,20 @@
 <div class="mb-3">
   <%= link_to icon_with_text("box-arrow-in-left", "計画書一覧に戻る"), plans_path %>
 </div>
-<h1 class="mb-4"><%= @plan.destination %></h1>
-
+<h1 class="mb-5"><%= @plan.destination %></h1>
+<h4>◉山行期間</h4>
+<div class="mb-5">
+<% if @plan.start_day.to_s == @plan.last_day.to_s %>
+  <%= l @plan.start_day, format: :long %>
+<% else %>
+  <%= l @plan.start_day, format: :long %> ~ <%= l @plan.last_day, format: :short_ja %>
+<% end %>
+</div>
 
 <h4>◉登山者名簿の登録</h4>
 <span class="text-danger" style="font-size: 0.8em">※最大６人まで登録できます</span>
 <%#------- 登山者名簿 -------%>
-<div class="card shadow-sm mt-3 mb-4">
+<div class="card shadow-sm mt-3 mb-5">
   <div class="card-body mx-3">
     <div class="row py-2">
       <div class="col-4 mt-auto fw-bold">
@@ -50,7 +57,7 @@
 <h4>◉行動スケジュールの登録</h4>
 <span class="text-danger" style="font-size: 0.8em">※最大５件まで登録できます</span>
 <%#------- 登山者名簿 -------%>
-<div class="card shadow-sm mt-3 mb-4">
+<div class="card shadow-sm mt-3 mb-5">
   <div class="card-body mx-3">
     <div class="row py-2">
       <div class="col-3 mt-auto fw-bold">
@@ -97,8 +104,35 @@
   </div>
 </div>
 
+<h4>◉エスケープルートの登録</h4>
+<div class="mb-5">
+  <%= link_to icon_with_text("plus-circle", "追加"),
+                      new_plan_plan_schedule_path(@plan),
+                      class: "btn__basic__m btn__green mb-3 mt-1 d-block"
+      %>
+</div>
+
+<h4>◉持ち物情報の登録</h4>
+<div class="mb-5">
+  <%= link_to icon_with_text("plus-circle", "追加"),
+                      new_plan_plan_schedule_path(@plan),
+                      class: "btn__basic__m btn__green mb-3 mt-1 d-block"
+      %>
+</div>
+
+<h4>◉所属している山岳会など（あれば）</h4>
+<span class="text-danger" style="font-size: 0.8em">※未登録の場合はPDFの山岳会の項目に「無所属」と表記されます</span>
+<div class="mb-5">
+  <%= link_to icon_with_text("plus-circle", "追加"),
+                      new_plan_plan_schedule_path(@plan),
+                      class: "btn__basic__m btn__green mb-3 mt-1 d-block"
+      %>
+</div>
+
 <%#------- PDF出力ボタン -------%>
-<div class="mb-4">
+<h4>◉PDFの出力</h4>
+<span class="text-danger" style="font-size: 0.8em">※入力した情報がPDFに反映されます↓</span>
+<div class="mt-2 mb-4">
   <%= link_to icon_with_text("file-earmark-pdf", "PDFを出力する"), plan_climbing_plan_index_path(@plan, format: "pdf"), class: "btn__basic__l", style: "background: #B30B01" %>
 </div>
 

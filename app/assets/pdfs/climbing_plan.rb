@@ -28,8 +28,32 @@ class ClimbingPlan < Prawn::Document
     # end
 
     #---- 山域・山名、参考期間、および登山者一覧 ----
+    # 登山者一覧（@companions）情報を配列に格納
+    role = [] # 役割
+    full_name = [] # 氏名
+    birthday = [] # 生年月日
+    gender = [] # 性別
+    age = [] #年齢
+    address = [] #住所
+    phone_number = [] #電話番号
+    emergency_contact = [] #緊急連絡先
+    emergency_number = [] #緊急連絡先の電話番号
+    if @companions.present?
+      @companions.each do |companion|
+        (role << companion.role) unless companion.role == "X"
+        full_name << companion.full_name
+        birthday << companion.birthday.to_s.split('-').join('.')
+        gender << companion.gender
+        age << "#{companion.age}歳"
+        address << companion.address
+        phone_number << companion.phone_number
+        emergency_contact << companion.emergency_contact
+        emergency_number << companion.emergency_number
+      end
+    end
+
     info = [
-      [{content: "<b>目的の山域・山名</b>", colspan: 2, inline_format: true}, {content: @plan.destination, colspan: 4}],
+      [{content: "<b>目的の山域・山名</b>", colspan: 2, inline_format: true}, {content: @plan.destination , colspan: 4}],
 
       [{content: "<b>山行期間</b>", colspan: 2, inline_format: true}, @plan.start_day.strftime('%m/%d'), "〜",{content: "#{@plan.last_day.strftime('%m/%d')}", colspan: 2}],
 
@@ -37,28 +61,28 @@ class ClimbingPlan < Prawn::Document
       ["年齢", "電話番号", "電話番号"],
 
       #------------- 1人目 --------------
-      [{content: "#{@companions[0].role unless (@companions[0].nil? || @companions[0].role == "X")}", rowspan: 2}, {content: "#{@companions[0].full_name unless @companions[0].nil?}", rowspan: 2}, "#{@companions[0].birthday.to_s.split('-').join('.') unless @companions[0].nil?}", {content: "#{@companions[0].gender unless @companions[0].nil?}", rowspan: 2}, "#{@companions[0].address unless @companions[0].nil?}", "#{@companions[0].emergency_contact unless @companions[0].nil?}" ],
-      ["#{@companions[0].age.to_s + '歳' unless @companions[0].nil?}", "#{@companions[0].phone_number unless @companions[0].nil?}", "#{@companions[0].emergency_number unless @companions[0].nil?}"],
+      [{content: "#{role[0]}", rowspan: 2}, {content: "#{full_name[0]}", rowspan: 2}, "#{birthday[0]}", {content: "#{gender[0]}", rowspan: 2}, "#{address[0]}", "#{emergency_contact[0]}" ],
+      ["#{age[0]}", "#{phone_number[0]}", "#{emergency_number[0]}"],
 
       #------------- 2人目 --------------
-      [{content: "#{@companions[1].role unless (@companions[1].nil? || @companions[1].role == "X")}", rowspan: 2}, {content: "#{@companions[1].full_name unless @companions[1].nil?}", rowspan: 2}, "#{@companions[1].birthday.to_s.split('-').join('.') unless @companions[1].nil?}", {content: "#{@companions[1].gender unless @companions[1].nil?}", rowspan: 2}, "#{@companions[1].address unless @companions[1].nil?}", "#{@companions[1].emergency_contact unless @companions[1].nil?}" ],
-      ["#{@companions[1].age.to_s + '歳' unless @companions[1].nil?}", "#{@companions[1].phone_number unless @companions[1].nil?}", "#{@companions[1].emergency_number unless @companions[1].nil?}"],
+      [{content: "#{role[1]}", rowspan: 2}, {content: "#{full_name[1]}", rowspan: 2}, "#{birthday[1]}", {content: "#{gender[1]}", rowspan: 2}, "#{address[1]}", "#{emergency_contact[1]}" ],
+      ["#{age[1]}", "#{phone_number[1]}", "#{emergency_number[1]}"],
 
       #------------- 3人目 --------------
-      [{content: "#{@companions[2].role unless (@companions[2].nil? || @companions[2].role == "X")}", rowspan: 2}, {content: "#{@companions[2].full_name unless @companions[2].nil?}", rowspan: 2}, "#{@companions[2].birthday.to_s.split('-').join('.') unless @companions[2].nil?}", {content: "#{@companions[2].gender unless @companions[2].nil?}", rowspan: 2}, "#{@companions[2].address unless @companions[2].nil?}", "#{@companions[2].emergency_contact unless @companions[2].nil?}" ],
-      ["#{@companions[2].age.to_s + '歳' unless @companions[2].nil?}", "#{@companions[2].phone_number unless @companions[2].nil?}", "#{@companions[2].emergency_number unless @companions[2].nil?}"],
+      [{content: "#{role[2]}", rowspan: 2}, {content: "#{full_name[2]}", rowspan: 2}, "#{birthday[2]}", {content: "#{gender[2]}", rowspan: 2}, "#{address[2]}", "#{emergency_contact[2]}" ],
+      ["#{age[2]}", "#{phone_number[2]}", "#{emergency_number[2]}"],
 
       #------------- 4人目 --------------
-      [{content: "#{@companions[3].role unless (@companions[3].nil? || @companions[3].role == "X")}", rowspan: 2}, {content: "#{@companions[3].full_name unless @companions[3].nil?}", rowspan: 2}, "#{@companions[3].birthday.to_s.split('-').join('.') unless @companions[3].nil?}", {content: "#{@companions[3].gender unless @companions[3].nil?}", rowspan: 2}, "#{@companions[3].address unless @companions[3].nil?}", "#{@companions[3].emergency_contact unless @companions[3].nil?}" ],
-      ["#{@companions[3].age.to_s + '歳' unless @companions[3].nil?}", "#{@companions[3].phone_number unless @companions[3].nil?}", "#{@companions[3].emergency_number unless @companions[3].nil?}"],
+      [{content: "#{role[3]}", rowspan: 2}, {content: "#{full_name[3]}", rowspan: 2}, "#{birthday[3]}", {content: "#{gender[3]}", rowspan: 2}, "#{address[3]}", "#{emergency_contact[3]}" ],
+      ["#{age[3]}", "#{phone_number[3]}", "#{emergency_number[3]}"],
 
       #------------- 5人目 --------------
-      [{content: "#{@companions[4].role unless (@companions[4].nil? || @companions[4].role == "X")}", rowspan: 2}, {content: "#{@companions[4].full_name unless @companions[4].nil?}", rowspan: 2}, "#{@companions[4].birthday.to_s.split('-').join('.') unless @companions[4].nil?}", {content: "#{@companions[4].gender unless @companions[4].nil?}", rowspan: 2}, "#{@companions[4].address unless @companions[4].nil?}", "#{@companions[4].emergency_contact unless @companions[4].nil?}" ],
-      ["#{@companions[4].age.to_s + '歳' unless @companions[4].nil?}", "#{@companions[4].phone_number unless @companions[4].nil?}", "#{@companions[4].emergency_number unless @companions[4].nil?}"],
+      [{content: "#{role[4]}", rowspan: 2}, {content: "#{full_name[4]}", rowspan: 2}, "#{birthday[4]}", {content: "#{gender[4]}", rowspan: 2}, "#{address[4]}", "#{emergency_contact[4]}" ],
+      ["#{age[4]}", "#{phone_number[4]}", "#{emergency_number[4]}"],
 
       #------------- 6人目 --------------
-      [{content: "#{@companions[5].role unless (@companions[5].nil? || @companions[5].role == "X")}", rowspan: 2}, {content: "#{@companions[5].full_name unless @companions[5].nil?}", rowspan: 2}, "#{@companions[5].birthday.to_s.split('-').join('.') unless @companions[5].nil?}", {content: "#{@companions[5].gender unless @companions[5].nil?}", rowspan: 2}, "#{@companions[5].address unless @companions[5].nil?}", "#{@companions[5].emergency_contact unless @companions[5].nil?}" ],
-      ["#{@companions[5].age.to_s + '歳' unless @companions[5].nil?}", "#{@companions[5].phone_number unless @companions[5].nil?}", "#{@companions[5].emergency_number unless @companions[5].nil?}"],
+      [{content: "#{role[5]}", rowspan: 2}, {content: "#{full_name[5]}", rowspan: 2}, "#{birthday[5]}", {content: "#{gender[5]}", rowspan: 2}, "#{address[5]}", "#{emergency_contact[5]}" ],
+      ["#{age[5]}", "#{phone_number[5]}", "#{emergency_number[5]}"],
     ]
 
     table info, cell_style: {height: 30},
@@ -125,32 +149,32 @@ class ClimbingPlan < Prawn::Document
     move_down 10
 
     # 行動予定の変数化
+    schedule_date = []
     if @schedules.present?
       @schedules.each_with_index do |schedule, i|
-        instance_variable_set("@plan#{i+1}_schedule_tmp" , []) # 初期値の設定
-        if schedule.present?
-          schedule.schedule_spots.each_with_index do |spot, j|
-            str_spot = "#{spot.spot}"
-            str_time = "(#{spot.time.strftime('%H:%M') if spot.time.present? })"
-            if spot.time.nil?
-              str_all = str_spot
-            else
-              str_all = str_spot + str_time
-            end
-            eval("@plan#{i+1}_schedule_tmp[#{j}] = str_all")
+        instance_variable_set("@schedule#{i+1}_tmp" , []) # 初期値の設定
+        schedule_date << schedule.date.strftime('%m/%d')
+        schedule.schedule_spots.each_with_index do |spot, j|
+          str_spot = "#{spot.spot}"
+          str_time = "(#{spot.time.strftime('%H:%M') if spot.time.present? })"
+          if spot.time.nil?
+            str_all = str_spot
+          else
+            str_all = str_spot + str_time
           end
+          eval("@schedule#{i+1}_tmp[#{j}] = str_all")
         end
-        eval("@plan#{i+1}_schedule = @plan#{i+1}_schedule_tmp.join(' ⇒ ')")
+        eval("@schedule#{i+1} = @schedule#{i+1}_tmp.join(' ⇒ ')")
       end
     end
 
     schedule = [
       ["日程", "行動予定"],
-      ["(1)  #{@schedules[0].date.strftime('%m/%d') unless @schedules[0].nil?}", "#{@plan1_schedule}"],
-      ["(2)  #{@schedules[1].date.strftime('%m/%d') unless @schedules[1].nil?}", "#{@plan2_schedule}"],
-      ["(3)  #{@schedules[2].date.strftime('%m/%d') unless @schedules[2].nil?}", "#{@plan3_schedule}"],
-      ["(4)  #{@schedules[3].date.strftime('%m/%d') unless @schedules[3].nil?}", "#{@plan4_schedule}"],
-      ["(5)  #{@schedules[4].date.strftime('%m/%d') unless @schedules[4].nil?}", "#{@plan5_schedule}"],
+      ["(1)  #{schedule_date[0]}", "#{@schedule1}"],
+      ["(2)  #{schedule_date[1]}", "#{@schedule2}"],
+      ["(3)  #{schedule_date[2]}", "#{@schedule3}"],
+      ["(4)  #{schedule_date[3]}", "#{@schedule4}"],
+      ["(5)  #{schedule_date[4]}", "#{@schedule5}"],
     ]
 
     table schedule, cell_style: {height: 45},
@@ -164,21 +188,20 @@ class ClimbingPlan < Prawn::Document
       columns(0).row(0..5).border_left_width = 2
       columns(-1).row(0..5).border_right_width = 2
       row(-1).border_bottom_width = 2
-
     end
 
     escape_route = [
-      ["エスケープルート\n(荒天・非常時対策)", ""]
+      ["エスケープルート\n(荒天・非常時対策)", "山小屋へ避難、または○○尾根を経由して△△登山口へ下山"]
     ]
     table escape_route, cell_style: {height: 45},
     # max_width: 520
     column_widths: [100, 420] do
       cells.size = 10
+      cells.leading = 3 # 文字の行間( line height )
       row(0).border_top_width = 2
       row(0).border_bottom_width = 2
       columns(0).row(0).border_left_width = 2
       columns(-1).row(0).border_right_width = 2
-
     end
     move_down 10
 

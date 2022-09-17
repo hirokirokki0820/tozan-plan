@@ -16,14 +16,18 @@ h1 {
   font-weight: bold;
 }
 
+h4 {
+  margin-bottom: 10px;
+}
+
 /*************** フォームのスタイル ***************/
 // ラベルのフォントを太字にする
 .form-label {
   font-weight: bold;
 }
 
-// のplaceholderの文字色
-.form-control::placeholder{
+// 入力フォームのplaceholderの文字色
+.form-control::placeholder, .form__custom::placeholder{
   color: #ccc;
 }
 

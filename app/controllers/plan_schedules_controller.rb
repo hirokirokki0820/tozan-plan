@@ -27,6 +27,7 @@ class PlanSchedulesController < ApplicationController
         redirect_to @plan, notice: "行動スケジュールが追加されました"
       else
         @schedules_form = SchedulesForm.new(schedule_params)
+        @schedules_form.errors.add(:date, "※必須項目です")
         render :new, status: :unprocessable_entity
       end
     else # @companion の登録上限に達した時の処理

@@ -1,9 +1,10 @@
 <%= form_with(model: [@plan, @schedules_form], url: @schedule.nil? ? plan_plan_schedules_path(@plan) : plan_plan_schedule_path(@schedule.plan_id, @schedule.id) ,local: true, class: "mb-5 bg-light p-3", data: { controller: "schedule" }) do |f| %>
 
   <%#------- 日付 -------- %>
-  <div class="mb-4">
+  <div class="mb-4 <%= @schedules_form.errors.include?(:date) ? "validation_errors" : "" %>">
     <%= icon("calendar-date") %> <%= f.label "日付", class: "form-label required" %>
     <%= f.date_field :date, { class: "form-select" }%>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @schedules_form, key: :date %>
     <p style="font-size: 0.8em" class="text-danger"></p>
   </div>
 
