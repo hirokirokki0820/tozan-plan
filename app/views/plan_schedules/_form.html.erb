@@ -1,0 +1,123 @@
+<%= form_with(model: [@plan, @schedules_form], url: @schedule.nil? ? plan_plan_schedules_path(@plan) : plan_plan_schedule_path(@schedule.plan_id, @schedule.id) ,local: true, class: "mb-5 bg-light p-3", data: { controller: "schedule" }) do |f| %>
+
+  <%#------- 日付 -------- %>
+  <div class="mb-4">
+    <%= icon("calendar-date") %> <%= f.label "日付", class: "form-label required" %>
+    <%= f.date_field :date, { class: "form-select" }%>
+    <p style="font-size: 0.8em" class="text-danger"></p>
+  </div>
+
+  <%#------- 行動予定（新規作成） -------- %>
+  <div class="mb-2">
+    <%= icon("list-ul") %> <%= f.label "行動予定", class: "form-label" %>
+    <p style="font-size: 0.8em" class="text-danger">※目的地・経由地、および各地点のおおよその到着予定時刻を入力してください（最大10地点まで登録可）</p>
+    <% if @schedule.nil? %>
+      <div class="row py-2">
+        <div class="col-1 mt-auto fw-bold">
+
+        </div>
+        <div class="col-6 mt-auto fw-bold">
+          目的地・経由地
+        </div>
+        <div class="col-5 mt-auto fw-bold">
+          到着予定時刻
+        </div>
+
+        <hr class="mt-2">
+      </div>
+      <div class="row">
+        <%= f.fields_for :spots do |spot| %>
+        <%#= f.fields_for "spots[]", ScheduleSpot.new do |spot| %>
+
+          <% 10.times do |i| %>
+            <div class="col-1 mt-auto" style="line-height: 45px;"><%= "#{i+1}." %></div>
+            <div class="col-7 mt-auto">
+              <%= spot.text_field :spot, name: "schedules_form[spots][][spot]" ,placeholder: "地点 #{i+1} : "+"#{"◯◯登山口" if i == 0 }"+"#{"◯◯尾根" if i == 1 }"+"#{"◯◯山頂" if i == 2 }"+"#{"◯◯小屋" if i == 3 }", class: "form__custom col-12 mb-2", value: "#{@schedules_form.spots[i]["spot"] if !@schedules_form.spots[i].nil?}" %>
+            </div>
+            <div class="col-4 mt-auto">
+              <%= spot.time_field :time, name: "schedules_form[spots][][time]" , class: "form__custom col-12 mb-2", value: "#{@schedules_form.spots[i]["time"] if !@schedules_form.spots[i].nil?}" %>
+            </div>
+
+            <% if i < 9 %>
+              <%#---- 矢印 --- %>
+              <div class="mb-2">
+                <div class="arrow__triangle"></div>
+              </div>
+            <% end %>
+            <hr class="mt-1" style="border: 1px solid #ccc">
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+    <%#------- 行動予定（編集時のフォーム） -------- %>
+      <div class="row py-2">
+        <div class="col-1 mt-auto fw-bold">
+
+        </div>
+        <div class="col-6 mt-auto fw-bold">
+          目的地・経由地
+        </div>
+        <div class="col-5 mt-auto fw-bold">
+          到着予定時刻
+        </div>
+
+        <hr class="mt-2">
+      </div>
+      <div class="row">
+        <% @schedule.schedule_spots.each_with_index do |schedule_spot, i| %>
+          <%= f.fields_for schedule_spot do |spot| %>
+          <%#= f.fields_for "spots[]", ScheduleSpot.new do |spot| %>
+            <div class="col-1 mt-auto" style="line-height: 45px;"><%= "#{i+1}." %></div>
+            <div class="col-7 mt-auto">
+              <%= spot.text_field :spot, name: "schedules_form[spots][][spot]" ,placeholder: "地点 #{i+1} : "+"#{"例）◯◯登山口" if i == 0 }"+"#{"例）◯◯尾根" if i == 1 }"+"#{"例）◯◯山頂" if i == 2 }"+"#{"例）◯◯小屋" if i == 3 }", class: "form__custom col-12 mb-2" %>
+            </div>
+            <div class="col-4 mt-auto">
+              <%= spot.time_field :time, name: "schedules_form[spots][][time]" , class: "form__custom col-12 mb-2" %>
+            </div>
+            <% if i < 9 %>
+              <%#---- 矢印 --- %>
+              <div class="mb-2">
+                <div class="arrow__triangle"></div>
+              </div>
+            <% end %>
+            <hr class="mt-1" style="border: 1px solid #ccc">
+          <% end %>
+        <% end %>
+        <%= f.fields_for :spots do |spot| %>
+        <%#= f.fields_for "spots[]", ScheduleSpot.new do |spot| %>
+          <% if @schedule.schedule_spots.length <= 10 %>
+            <% (10 - @schedule.schedule_spots.length).times do |i| %>
+              <div class="col-1 mt-auto" style="line-height: 45px;"><%= "#{@schedule.schedule_spots.length + i + 1}." %></div>
+              <div class="col-7 mt-auto">
+                <%= spot.text_field :spot, name: "schedules_form[spots][][spot]" ,placeholder: "地点 #{@schedule.schedule_spots.length + i + 1} : ", class: "form__custom col-12 mb-2" %>
+              </div>
+              <div class="col-4 mt-auto">
+                <%= spot.time_field :time, name: "schedules_form[spots][][time]" , class: "form__custom col-12 mb-2" %>
+              </div>
+
+              <% if (@schedule.schedule_spots.length + i) < 9 %>
+                <%#---- 矢印 --- %>
+                <div class="mb-2">
+                  <div class="arrow__triangle"></div>
+                </div>
+              <% end %>
+              <hr class="mt-1" style="border: 1px solid #ccc">
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <!--
+  <%#------- 入力フォームの追加（１０地点以下の場合） -------- %>
+  <div class="btn__add mb-4" data-schedule-target="add_field" data-json="<%#= @schedule.schedule_spots.length.to_json %>" data-action="click->schedule#addScheduleField"><%= icon_with_text("plus-circle", "入力欄を追加") %></div>
+  <div class="btn__add mb-4" data-schedule-target="add_field" data-action="click->schedule#addScheduleField"><%= icon_with_text("plus-circle", "入力欄を追加") %></div>
+   <div class="btn btn-success" data-companion-target="add_address_book"><%= icon_with_text("plus-circle", "追加") %></div> -->
+
+
+
+  <%#------- 登録 -------- %>
+  <%= f.submit "登録する", class: "btn btn-primary" %>
+  <%= link_to "キャンセル", @plan , class: "btn btn-secondary"%>
+
+<% end %>

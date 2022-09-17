@@ -1,7 +1,7 @@
 <!-- ナビゲーションメニュー -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container">
-    <%= link_to "登山計画書メーカー", (logged_in? ? current_user : root_path), class: "navbar-brand" %>
+    <%= link_to "登山計画書メーカー", (logged_in? ? mypage_path : root_path), class: "navbar-brand" %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -15,7 +15,7 @@
 
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-              <li><%= link_to icon_with_text("list-ul","計画書リスト"), current_user, class: "dropdown-item" %></li>
+              <li><%= link_to icon_with_text("list-ul","計画書一覧"), plans_path, class: "dropdown-item" %></li>
               <li><%= link_to icon_with_text("file-earmark", "新規計画書作成"), new_plan_path, class: "dropdown-item" %></li>
             </ul>
           </li>
@@ -25,9 +25,9 @@
 
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-              <li><%= link_to icon_with_text("person-circle","マイページ"), current_user, class: "dropdown-item" %></li>
+              <li><%= link_to icon_with_text("person-circle","マイページ"), mypage_path, class: "dropdown-item" %></li>
               <li><%= link_to icon_with_text("book","アドレス帳"), user_address_books_path(current_user), class: "dropdown-item"%></li>
-              <li><%= link_to icon_with_text("gear","アカウント設定"), edit_user_path(current_user), class: "dropdown-item"%></li>
+              <li><%= link_to icon_with_text("gear","アカウント設定"), mypage_account_setting_path, class: "dropdown-item"%></li>
               <li>
                 <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><%= icon_with_text("box-arrow-right","ログアウト") %></a>
               </li>

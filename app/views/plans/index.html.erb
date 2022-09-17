@@ -1,0 +1,40 @@
+<!-- 計画書一覧 -->
+<div class="card shadow mt-3 mb-5">
+  <div class="card-header">
+    <%= icon_with_text("file-earmark", "計画書一覧") %>
+  </div>
+
+  <div class="card-body mx-3">
+    <%= link_to icon_with_text("plus-circle", "計画書を作成"),
+                    new_plan_path,
+                    class: "btn__basic__m btn__red mb-3 mt-1 d-block"
+    %>
+    <div class="row py-2">
+      <div class="col-4 mt-auto fw-bold">
+        登山計画書
+      </div>
+      <div class="col-8 mt-auto fw-bold d-flex justify-content-end">
+        PDF出力 / 複製 / 編集
+      </div>
+      <hr class="mt-2">
+    </div>
+    <div class="row">
+      <% current_user.plans.each do |plan| %>
+        <div class="col-5 mt-auto">
+          <%= link_to plan.destination, plan %>
+        </div>
+
+        <div class="col-7 text-end">
+          <%= link_to icon("file-earmark-pdf"), plan_climbing_plan_index_path(plan, format: "pdf"), class: "btn btn-outline-danger" %>
+          <%= link_to icon("clipboard-check"), plan, class: "btn btn-outline-success" %>
+          <%= link_to "編集", edit_plan_path(plan) , class: "btn btn-outline-primary" %>
+        </div>
+        <hr class="mt-2" style="border: 1px solid #ccc">
+      <% end %>
+    </div>
+
+    <!-- <div class="d-flex justify-content-end mt-3">
+      <%#= paginate @cats %>
+    </div> -->
+  </div>
+</div>

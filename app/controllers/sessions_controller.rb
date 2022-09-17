@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   def new
+    redirect_to mypage_path if logged_in?
   end
 
   def create
@@ -8,7 +9,7 @@ class SessionsController < ApplicationController
       log_in @user
       session_params[:remember_me] == "1" ? remember(@user) : forget(@user)
       flash[:notice] = "ログインしました"
-      redirect_to @user
+      redirect_to mypage_path
     else
       @user = User.new(session_params)
       flash.now[:error] = "ユーザー名またはパスワードに誤りがあります"

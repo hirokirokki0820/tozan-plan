@@ -21,7 +21,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
-        <%= link_to "削除", @user, class: "btn btn-danger", data: { turbo_method: :delete } %>
+        <%= link_to "削除", account_delete_path, class: "btn btn-danger", data: { turbo_method: :delete } %>
       </div>
     </div>
   </div>

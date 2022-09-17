@@ -1,4 +1,4 @@
-<%= bootstrap_form_with(model: user, class: "mb-5") do |f| %>
+<%= bootstrap_form_with(model: user, class: "mb-5 bg-light p-3") do |f| %>
   <%= f.text_field :name, placeholder: "ユーザー名（表示名）を入力してください" %>
 
   <% if user.new_record? %>
@@ -12,5 +12,5 @@
   <%= f.password_field :password_confirmation, placeholder: "パスワードをもう一度入力してください" %>
 
   <%= f.primary %>
-  <%= link_to "キャンセル", user.new_record? ? root_path : current_user , class: "btn btn-secondary"%>
+  <%= link_to "キャンセル", user.new_record? ? root_path : mypage_path , class: "btn btn-secondary"%>
 <% end %>

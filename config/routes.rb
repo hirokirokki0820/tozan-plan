@@ -2,12 +2,14 @@ Rails.application.routes.draw do
   root "main#top"
 
   get "signup", to: "users#new"
+  get "mypage", to: "users#show"
+  get "mypage/account_setting", to: "users#edit"
+  delete "account_delete", to: "users#destroy"
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
 
-  resources :users, except: [:new] do
-    resources :profiles, only: [:new, :edit, :create, :update]
+  resources :users, only: [:index, :create, :update] do
     resources :address_books
     resources :add_addresses, only: [:new]
   end
@@ -21,6 +23,8 @@ Rails.application.routes.draw do
       resources :climbing_plan, only: [:index]
     end
     resources :companions
+    resources :plan_schedules
+    resources :schedule_spots
   end
 
   # フォーマット用pdf 出力

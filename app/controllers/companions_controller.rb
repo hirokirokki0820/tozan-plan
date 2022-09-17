@@ -4,11 +4,6 @@ class CompanionsController < ApplicationController
   before_action :require_user
   before_action :require_same_user
 
-  # GET /companions or /companions.json
-  def index
-    @companions = Companion.all
-  end
-
   # GET /companions/1 or /companions/1.json
   def show
   end
@@ -16,8 +11,6 @@ class CompanionsController < ApplicationController
   # GET /companions/new
   def new
     @companion = Companion.new
-    @address_book = AddressBook.new
-    @address_book.user = current_user
   end
 
   # GET /companions/1/edit
@@ -79,9 +72,9 @@ class CompanionsController < ApplicationController
       params.require(:companion).permit(:full_name, :role, :birthday, :age, :gender, :address, :phone_number, :emergency_contact, :emergency_number, :add_address, :selected_id)
     end
 
-    def address_book_params
-      params.require(:address_book).permit(:full_name, :birthday, :age, :gender, :address, :phone_number, :emergency_contact, :emergency_number)
-    end
+    # def address_book_params
+    #   params.require(:address_book).permit(:full_name, :birthday, :age, :gender, :address, :phone_number, :emergency_contact, :emergency_number)
+    # end
 
     def require_same_user
       if current_user != @plan.user

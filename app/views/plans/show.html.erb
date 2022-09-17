@@ -1,5 +1,5 @@
 <div class="mb-3">
-  <%= link_to icon_with_text("box-arrow-in-left", "計画書一覧に戻る"), current_user %>
+  <%= link_to icon_with_text("box-arrow-in-left", "計画書一覧に戻る"), plans_path %>
 </div>
 <h1 class="mb-4"><%= @plan.destination %></h1>
 
@@ -47,11 +47,61 @@
   </div>
 </div>
 
+<h4>◉行動スケジュールの登録</h4>
+<span class="text-danger" style="font-size: 0.8em">※最大５件まで登録できます</span>
+<%#------- 登山者名簿 -------%>
+<div class="card shadow-sm mt-3 mb-4">
+  <div class="card-body mx-3">
+    <div class="row py-2">
+      <div class="col-3 mt-auto fw-bold">
+        日付
+      </div>
+      <div class="col-4 mt-auto fw-bold">
+        行動予定
+      </div>
+      <div class="col-5 mt-auto fw-bold d-flex justify-content-end">
+
+      </div>
+      <hr class="mt-2">
+    </div>
+    <div class="row">
+      <% @plan.plan_schedules.order(date: "ASC").each do |schedule| %>
+        <div class="col-3 mt-auto">
+          <% if !schedule.date.nil? %>
+            <%= l schedule.date, format: :short %>
+          <% end %>
+          <%#= link_to companion.full_name, plan_companion_path(companion.plan_id, companion.id) %>
+        </div>
+        <div class="col-4 mt-auto">
+          <%#= truncate(schedule.schedule_spots, length: 12) %>
+          <% schedule.schedule_spots.each_with_index do |spot, index| %>
+            <% if index < 2 %>
+              <%= "--" if !(index == 0) %> <%= spot["spot"] %> <%= "..." if (index == 1) %>
+            <% end %>
+          <% end %>
+          <%#= companion.gender %>
+        </div>
+        <div class="col-5 text-end">
+          <%= link_to "編集", edit_plan_plan_schedule_path(schedule.plan_id, schedule.id) , class: "btn btn-outline-primary" %>
+          <%= link_to icon("trash"), plan_plan_schedule_path(schedule.plan_id, schedule.id), class: "btn btn-outline-danger", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？"}%>
+        </div>
+        <hr class="mt-2" style="border: 1px solid #ccc">
+      <% end %>
+    </div>
+    <% if @plan.plan_schedules.length < 5 %>
+      <%= link_to icon_with_text("plus-circle", "追加"),
+                      new_plan_plan_schedule_path(@plan),
+                      class: "btn__basic__m btn__green mb-3 mt-1 d-block"
+      %>
+    <% end %>
+  </div>
+</div>
+
 <%#------- PDF出力ボタン -------%>
 <div class="mb-4">
   <%= link_to icon_with_text("file-earmark-pdf", "PDFを出力する"), plan_climbing_plan_index_path(@plan, format: "pdf"), class: "btn__basic__l", style: "background: #B30B01" %>
 </div>
 
 <div class="mb-5">
-  <%= link_to icon_with_text("box-arrow-in-left", "計画書一覧に戻る"), current_user %>
+  <%= link_to icon_with_text("box-arrow-in-left", "計画書一覧に戻る"), plans_path %>
 </div>

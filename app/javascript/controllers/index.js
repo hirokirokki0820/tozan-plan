@@ -9,3 +9,6 @@ application.register("companion", CompanionController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import ScheduleController from "./schedule_controller"
+application.register("schedule", ScheduleController)

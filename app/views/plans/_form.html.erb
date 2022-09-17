@@ -1,8 +1,8 @@
-<%= bootstrap_form_with(model: plan, class: "mb-5") do |f| %>
+<%= bootstrap_form_with(model: plan, class: "mb-5 bg-light p-3") do |f| %>
   <%= f.text_field :destination, placeholder: "例）北アルプス 白馬岳" %>
   <%= f.date_field :start_day %>
   <%= f.date_field :last_day %>
   <%= f.text_field :submit_to, placeholder: "例）長野県警察本部" %>
   <%= f.primary %>
-  <%= link_to "キャンセル", current_user , class: "btn btn-secondary"%>
+  <%= link_to "キャンセル", mypage_path , class: "btn btn-secondary"%>
 <% end %>

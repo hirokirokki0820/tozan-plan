@@ -40,8 +40,8 @@ label.required:after {
   color: red;
 }
 
-// 誕生日のセレクトボックスのスタイル
-.form__select{
+// 入力フォーム (input)のカスタム
+.form__custom{
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px 10px;
@@ -170,6 +170,27 @@ label.required:after {
 // PDF表示ボタンのスタイル
 .btn__pdf{
   background: #B30B01
+}
+
+// 要素追加のボタン
+.btn__add{
+  margin: 0 auto;
+  text-decoration: initial;
+  color: #555;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  height: 45px;
+  line-height: 40px;
+  width: 100%;
+  border: 3px dotted #555;
+
+  &:hover{
+    cursor: pointer;
+    text-decoration: initial;
+    color: white;
+    background-color: #ccc;
+  }
 }
 
 

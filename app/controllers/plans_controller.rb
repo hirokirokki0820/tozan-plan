@@ -1,9 +1,10 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: %i[ show edit update destroy ]
+  before_action :require_user
   before_action :require_same_user, only: %i[ show edit update destroy ]
 
   def index
-    @plans = Plan.all
+    @plans = Plan.where(id: current_user.id)
   end
 
   def show

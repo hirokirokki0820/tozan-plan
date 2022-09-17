@@ -5,7 +5,7 @@ class AccountActivationsController < ApplicationController
       user.activate
       log_in user
       flash[:notice] = "アカウントが有効化されました"
-      redirect_to user
+      redirect_to mypage_path
     else
       flash[:error] = "このリンクは無効、もしくは有効期限切れです。お手数ですが、再登録の方よろしくお願いします。"
       user.destroy if user

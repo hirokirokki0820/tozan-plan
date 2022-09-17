@@ -1,11 +1,11 @@
-<%= form_with(model: [@plan, @companion], local: true, class: "mb-5", data: { controller: "companion"}) do |f| %>
+<%= form_with(model: [@plan, @companion], local: true, class: "mb-5 bg-light p-3", data: { controller: "companion"}) do |f| %>
 
   <%#------- アドレス帳から追加 -------- %>
   <% if @companion.new_record? %>
     <div class="mb-3">
-      <%= icon("person") %> <%= f.label "アドレス帳から追加", for: "selectAddresses", class: "form-label" %>
-      <p style="font-size: 0.8em" class="text-danger">※アカウントタブ「アドレス帳」より個人情報の登録・編集ができます</p>
+      <%= icon("book") %> <%= f.label "アドレス帳から追加", for: "selectAddresses", class: "form-label" %>
       <%= f.select :selected_id, current_user.address_books.map { |address_book| [address_book.full_name, address_book.id]}, {include_blank: "選択なし"}, {class: "form-select mb-2", id: "selectAddresses", data: { companion_target: "select_addresses", action: "change->companion#selectAddressBook", json: "#{current_user.address_books.to_json if !current_user.address_books.nil?}" }} %>
+      <p style="font-size: 0.8em" class="text-danger">※アカウントメニューの「アドレス帳」より個人情報の登録・編集ができます</p>
     </div>
     <%#---- 矢印 --- %>
     <div class="mb-2">
@@ -29,7 +29,7 @@
   <div class="mb-3">
     <%= icon("person") %> <%= f.label "役割", for: "companionRole", class: "form-label" %>
     <%= f.select :role, [['役割なし', "X"],['リーダー(CL)', "CL" ], ['サブリーダー(SL)', "SL"]], {include_blank: false}, {class: "form-select", id: "companionRole", data: { companion_target: "role" }}%>
-    <p style="font-size: 0.8em" class="text-danger">※パーティーのリーダーは「CL」を、サブリーダーは「SL」を選択してください</p>
+    <p style="font-size: 0.8em" class="text-danger mt-2">※パーティーのリーダーは「CL」を、サブリーダーは「SL」を選択してください</p>
   </div>
 
   <%#------- 生年月日 -------- %>
@@ -42,7 +42,7 @@
         end_year: (Time.now.year - 10),
         default: Date.new(1990, 1, 1),
         date_separator: '/ '},
-        {class: "form__select", id: "companionBirthday" } %>
+        {class: "form__custom", id: "companionBirthday" } %>
     </div>
   </div>
 
@@ -94,7 +94,7 @@
 
   <%#------- 入力内容をアドレス帳に保存したい場合 -------- %>
   <% if @companion.new_record? %>
-    <div class="px-3 py-2 mb-3 bg-light" data-companion-target="add_address">
+    <div class="p-2 mb-3 shadow-sm" style="border: 1px solid #eee" data-companion-target="add_address">
       <div class="form-check">
         <%= f.check_box :add_address, class: "form-check-input", id: "addAddress" ,as: :boolean, data: { companion_target: "add_address_book" } %>
         <%= f.label "入力内容をアドレス帳に保存する", class: "form-check-label", for: "addAddress" %>

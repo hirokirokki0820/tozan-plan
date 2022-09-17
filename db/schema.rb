@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_13_061708) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_14_005247) do
   create_table "address_books", force: :cascade do |t|
     t.string "full_name"
     t.string "gender"
@@ -42,6 +42,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_061708) do
     t.index ["plan_id"], name: "index_companions_on_plan_id"
   end
 
+  create_table "plan_schedules", force: :cascade do |t|
+    t.date "date"
+    t.text "schedule"
+    t.string "plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plan_id"], name: "index_plan_schedules_on_plan_id"
+  end
+
   create_table "plans", id: :string, force: :cascade do |t|
     t.string "destination"
     t.string "submit_to"
@@ -51,6 +60,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_061708) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_plans_on_user_id"
+  end
+
+  create_table "schedule_spots", force: :cascade do |t|
+    t.string "spot"
+    t.time "time"
+    t.integer "plan_schedule_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plan_schedule_id"], name: "index_schedule_spots_on_plan_schedule_id"
   end
 
   create_table "users", id: :string, force: :cascade do |t|
@@ -70,5 +88,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_061708) do
 
   add_foreign_key "address_books", "users"
   add_foreign_key "companions", "plans"
+  add_foreign_key "plan_schedules", "plans"
   add_foreign_key "plans", "users"
+  add_foreign_key "schedule_spots", "plan_schedules"
 end

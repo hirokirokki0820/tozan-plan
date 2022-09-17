@@ -4,7 +4,6 @@ class User < ApplicationRecord
   before_save :downcase_email
   has_many :plans, dependent: :destroy
   has_many :address_books, dependent: :destroy
-  has_one :profile, dependent: :destroy
 
   # email オブジェクトが保存される時点で小文字に変換する
   before_save { self.email = email.downcase }

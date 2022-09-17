@@ -28,7 +28,7 @@ class PasswordResetsController < ApplicationController
     elsif @user.update(user_params)
       log_in @user
       flash[:notice] = "パスワードが変更されました"
-      redirect_to @user
+      redirect_to mypage_path
     else
       render "edit", status: :unprocessable_entity
     end
