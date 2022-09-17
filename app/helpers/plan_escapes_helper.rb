@@ -1,0 +1,2 @@
+module PlanEscapesHelper
+end

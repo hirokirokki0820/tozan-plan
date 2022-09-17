@@ -1,0 +1,8 @@
+<h1>山岳会・サークル情報の編集</h1>
+
+<%= render "form" %>
+
+<hr>
+<div class="mb-5">
+  <%= link_to icon_with_text("trash", "削除する"), plan_plan_club_path(@plan), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？"} %>
+</div>

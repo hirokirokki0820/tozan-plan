@@ -1,0 +1,50 @@
+<%= form_with(model: [@plan, @equipment], local: true, class: "mb-5 bg-light p-3") do |f| %>
+
+
+  <%#------- 食糧 -------- %>
+  <div class="mb-3 <%= @equipment.errors.include?(:food) ? "validation_errors" : "" %>">
+    <%= icon("cup-straw") %> <%= f.label "食糧" ,class: "form-label required" %>
+    <%= f.text_field :food, placeholder: "例）基本食(◯日分), 行動食(◯日分), 水(◯日分)", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @equipment, key: :food %>
+  </div>
+
+  <%#------- 非常食 -------- %>
+  <div class="mb-3 <%= @equipment.errors.include?(:emergency_food) ? "validation_errors" : "" %>">
+    <%= icon("cup-straw") %> <%= f.label "非常食" ,class: "form-label required" %>
+    <%= f.text_field :emergency_food, placeholder: "例）カロリーメイト(◯日分)", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @equipment, key: :emergency_food %>
+  </div>
+
+  <%#------- 野営器具 -------- %>
+  <div class="mb-3 <%= @equipment.errors.include?(:camp_equipment) ? "validation_errors" : "" %>">
+    <%= icon("house") %> <%= f.label "野営器具" ,class: "form-label" %>
+    <%= f.text_field :camp_equipment, placeholder: "例）テント(◯人用), ツェルト", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @equipment, key: :camp_equipment %>
+  </div>
+
+  <%#------- 行動器具 -------- %>
+  <div class="mb-3 <%= @equipment.errors.include?(:climbing_equipment) ? "validation_errors" : "" %>">
+    <%= icon("gear") %> <%= f.label "行動器具" ,class: "form-label" %>
+    <%= f.text_field :climbing_equipment, placeholder: "例）ロープ, アイゼン", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @equipment, key: :climbing_equipment %>
+  </div>
+
+  <%#------- 通信機器 -------- %>
+  <div class="mb-3 <%= @equipment.errors.include?(:wireless) ? "validation_errors" : "" %>">
+    <%= icon("wifi") %> <%= f.label "通信機器" ,class: "form-label" %>
+    <%= f.text_field :wireless, placeholder: "例）無線(1台 430MHz), 携帯電話", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @equipment, key: :wireless %>
+  </div>
+
+  <%#------- その他 -------- %>
+  <div class="mb-4 <%= @equipment.errors.include?(:others) ? "validation_errors" : "" %>">
+    <%= icon("bag") %> <%= f.label "その他" ,class: "form-label" %>
+    <%= f.text_field :others, placeholder: "例）燃料, 救急セットなど", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @equipment, key: :others %>
+  </div>
+
+
+  <%#------- 登録 -------- %>
+  <%= f.submit "登録する", class: "btn btn-primary" %>
+  <%= link_to "キャンセル", @plan , class: "btn btn-secondary"%>
+<% end %>

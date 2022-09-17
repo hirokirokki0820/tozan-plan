@@ -25,6 +25,9 @@ Rails.application.routes.draw do
     resources :companions
     resources :plan_schedules
     resources :schedule_spots
+    resources :plan_clubs
+    resources :plan_equipments
+    resources :plan_escapes
   end
 
   # フォーマット用pdf 出力

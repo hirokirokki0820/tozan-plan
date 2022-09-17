@@ -1,9 +1,13 @@
 class ClimbingPlan < Prawn::Document
   def initialize(plan)
     super(page_size: 'A4') #新規PDF作成
+
     @plan = plan
     @companions = @plan.companions.order(role: 'ASC')
     @schedules = @plan.plan_schedules.order(date: 'ASC')
+    @club = @plan.plan_club
+    @equipment = @plan.plan_equipment
+    @escape = @plan.plan_escape
 
     # 日本語フォントの読み込み
     font_families.update('JP' => { normal: 'app/assets/fonts/ipaexm.ttf', bold: 'app/assets/fonts/ipaexg.ttf' })
@@ -52,10 +56,17 @@ class ClimbingPlan < Prawn::Document
       end
     end
 
+    # 入山日と下山日を変数に代入
+    start_day = @plan.start_day.strftime('%m/%d')
+    last_day = @plan.last_day.strftime('%m/%d')
+    if start_day == last_day
+      last_day = ""
+    end
+
     info = [
       [{content: "<b>目的の山域・山名</b>", colspan: 2, inline_format: true}, {content: @plan.destination , colspan: 4}],
 
-      [{content: "<b>山行期間</b>", colspan: 2, inline_format: true}, @plan.start_day.strftime('%m/%d'), "〜",{content: "#{@plan.last_day.strftime('%m/%d')}", colspan: 2}],
+      [{content: "<b>山行期間</b>", colspan: 2, inline_format: true}, "#{start_day}" , "#{last_day.blank? ? "" : "〜" }",{content: "#{last_day}", colspan: 2}],
 
       [{content: "役割", rowspan: 2}, {content: "氏名", rowspan: 2}, "生年月日", {content: "性別", rowspan: 2}, "現住所", "緊急連絡先(間柄)" ],
       ["年齢", "電話番号", "電話番号"],
@@ -103,6 +114,8 @@ class ClimbingPlan < Prawn::Document
       columns(0).row(0..3).border_left_width = 2
       columns(-1).row(0..3).border_right_width = 2
       row(2..3).font_style = :bold
+      columns(2).row(1).padding_left = 15
+      columns(4).row(1).padding_left = 15
     end
 
     sample = [
@@ -122,12 +135,35 @@ class ClimbingPlan < Prawn::Document
       cells.border_bottom_width = 1
     end
     move_down 10
+
+    # 所属情報（@club）を変数に代入
+    belongs_to = "「無所属」" # 所属
+    group_name = "" # 団体名
+    representative_name = "" # 代表者
+    representative_address = "" # 代表者住所
+    representative_number = "" #代表者電話番号
+    address = "" #住所
+    phone_number = "" #電話番号
+    emergency_contact = "" #緊急連絡先
+    rescue_system = "" #救援体制
+    if @club.present?
+      belongs_to << @club.belongs_to
+      group_name << @club.group_name
+      representative_name << @club.representative_name
+      representative_address << @club.representative_address
+      representative_number << @club.representative_number
+      address << @club.address
+      phone_number << @club.phone_number
+      emergency_contact << @club.emergency_contact
+      rescue_system << @club.rescue_system
+    end
+
     club = [
-      [{content: "<b>所属:</b> ◯◯山岳会", inline_format: true}, "", ""],
-      [{content: "<b>団体名:</b> 大人のワンダーフォーゲル部", inline_format: true}, "", {content: "<b>救援体制:</b> ", inline_format: true}],
-      [{content: "<b>代表者:</b> ", inline_format: true}, "", {content: "<b>緊急連絡先:</b> ", inline_format: true}],
-      [{content: "<b>代表者住所:</b> ", inline_format: true}, "", {content: "<b>住所:</b> ", inline_format: true}],
-      [{content: "<b>代表者電話:</b> ", inline_format: true}, "", {content: "<b>電話番号:</b> ", inline_format: true}]
+      [{content: "<b>所属:</b> #{belongs_to}", inline_format: true}, "", ""],
+      [{content: "<b>団体名:</b> #{group_name}", inline_format: true}, "", {content: "<b>救援体制:</b> #{rescue_system}", inline_format: true}],
+      [{content: "<b>代表者:</b> #{representative_name}", inline_format: true}, "", {content: "<b>緊急連絡先:</b> #{emergency_contact}", inline_format: true}],
+      [{content: "<b>代表者住所:</b> #{representative_address}", inline_format: true}, "", {content: "<b>住所:</b> #{address}", inline_format: true}],
+      [{content: "<b>代表者電話:</b> #{representative_number}", inline_format: true}, "", {content: "<b>電話番号:</b> #{phone_number}", inline_format: true}]
     ]
 
     table club, cell_style: {height: 25},
@@ -190,8 +226,11 @@ class ClimbingPlan < Prawn::Document
       row(-1).border_bottom_width = 2
     end
 
+    escape = ""
+    escape << @escape.escape_route
+
     escape_route = [
-      ["エスケープルート\n(荒天・非常時対策)", "山小屋へ避難、または○○尾根を経由して△△登山口へ下山"]
+      ["エスケープルート\n(荒天・非常時対策)", "#{escape}"]
     ]
     table escape_route, cell_style: {height: 45},
     # max_width: 520
@@ -212,16 +251,32 @@ class ClimbingPlan < Prawn::Document
     end
     move_down 10
 
-    belongings = [
-      ["基本食料", ""],
-      ["非常食", ""],
-      ["野営器具", ""],
-      ["行動器具", ""],
-      ["通信機器", ""],
-      ["その他", ""]
+    # 持ち物情報（@equipment）を変数に代入
+    food = "" # 食糧
+    emergency_food = "" # 非常食
+    camp_equipment = "" # 野営器具
+    climbing_equipment = "" # 行動器具
+    wireless = "" # 通信機器
+    others = "" # その他
+
+    if @club.present?
+      food = @equipment.food
+      emergency_food = @equipment.emergency_food
+      camp_equipment = @equipment.camp_equipment
+      climbing_equipment = @equipment.climbing_equipment
+      wireless = @equipment.wireless
+      others = @equipment.others
+    end
+    equipment = [
+      ["基本食料", "#{food}"],
+      ["非常食", "#{emergency_food}"],
+      ["野営器具", "#{camp_equipment}"],
+      ["行動器具", "#{climbing_equipment}"],
+      ["通信機器", "#{wireless}"],
+      ["その他", "#{others}"]
     ]
 
-    table belongings, cell_style: {height: 25},
+    table equipment, cell_style: {height: 25},
     column_widths: [100, 420] do
       cells.size = 10
       row(0).border_top_width = 2

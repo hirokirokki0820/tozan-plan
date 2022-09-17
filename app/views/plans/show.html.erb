@@ -106,27 +106,48 @@
 
 <h4>◉エスケープルートの登録</h4>
 <div class="mb-5">
-  <%= link_to icon_with_text("plus-circle", "追加"),
-                      new_plan_plan_schedule_path(@plan),
+  <% if @plan.plan_escape.nil? %>
+    <%= link_to icon_with_text("plus-circle", "追加"),
+                      new_plan_plan_escape_path(@plan),
                       class: "btn__basic__m btn__green mb-3 mt-1 d-block"
       %>
+  <% else %>
+    <%= link_to icon_with_text("pencil-square", "編集"),
+                      edit_plan_plan_escape_path(@plan.id, @plan.plan_escape.id),
+                      class: "btn__basic__m mb-3 mt-1 d-block"
+      %>
+  <% end %>
 </div>
 
 <h4>◉持ち物情報の登録</h4>
 <div class="mb-5">
-  <%= link_to icon_with_text("plus-circle", "追加"),
-                      new_plan_plan_schedule_path(@plan),
+  <% if @plan.plan_equipment.nil? %>
+    <%= link_to icon_with_text("plus-circle", "追加"),
+                      new_plan_plan_equipment_path(@plan),
                       class: "btn__basic__m btn__green mb-3 mt-1 d-block"
       %>
+  <% else %>
+    <%= link_to icon_with_text("pencil-square", "編集"),
+                      edit_plan_plan_equipment_path(@plan.id, @plan.plan_equipment.id),
+                      class: "btn__basic__m mb-3 mt-1 d-block"
+      %>
+  <% end %>
 </div>
 
 <h4>◉所属している山岳会など（あれば）</h4>
 <span class="text-danger" style="font-size: 0.8em">※未登録の場合はPDFの山岳会の項目に「無所属」と表記されます</span>
 <div class="mb-5">
-  <%= link_to icon_with_text("plus-circle", "追加"),
-                      new_plan_plan_schedule_path(@plan),
+  <% if @plan.plan_club.nil? %>
+    <%= link_to icon_with_text("plus-circle", "追加"),
+                      new_plan_plan_club_path(@plan),
                       class: "btn__basic__m btn__green mb-3 mt-1 d-block"
       %>
+  <% else %>
+    <%= link_to icon_with_text("pencil-square", "編集"),
+                      edit_plan_plan_club_path(@plan.id, @plan.plan_club.id),
+                      class: "btn__basic__m mb-3 mt-1 d-block"
+      %>
+  <% end %>
 </div>
 
 <%#------- PDF出力ボタン -------%>

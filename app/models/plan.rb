@@ -2,6 +2,9 @@ class Plan < ApplicationRecord
   before_create :set_plan_id
   has_many :companions, dependent: :destroy
   has_many :plan_schedules, dependent: :destroy
+  has_one :plan_club, dependent: :destroy
+  has_one :plan_equipment, dependent: :destroy
+  has_one :plan_escape, dependent: :destroy
   belongs_to :user
 
   validates :destination, presence: true, length: { maximum: 30 }

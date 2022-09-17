@@ -1,0 +1,13 @@
+<%= form_with(model: [@plan, @escape], local: true, class: "mb-5 bg-light p-3") do |f| %>
+
+  <%#------- エスケープルート -------- %>
+  <div class="mb-4 <%= @escape.errors.include?(:escape_route) ? "validation_errors" : "" %>">
+    <%= icon("pin-map-fill") %> <%= f.label "エスケープルート" ,class: "form-label required" %>
+    <%= f.text_field :escape_route, placeholder: "例）山小屋へ避難、または○○尾根を経由して△△登山口へ下山", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @escape, key: :escape_route %>
+  </div>
+
+  <%#------- 登録 -------- %>
+  <%= f.submit "登録する", class: "btn btn-primary" %>
+  <%= link_to "キャンセル", @plan , class: "btn btn-secondary"%>
+<% end %>

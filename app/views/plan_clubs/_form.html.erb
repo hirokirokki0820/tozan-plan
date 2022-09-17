@@ -1,0 +1,72 @@
+<%= form_with(model: [@plan, @club], local: true, class: "mb-5 bg-light p-3") do |f| %>
+
+
+  <%#------- 所属 -------- %>
+  <div class="mb-3 <%= @club.errors.include?(:belongs_to) ? "validation_errors" : "" %>">
+    <%= icon("people") %> <%= f.label "所属" ,class: "form-label required" %>
+    <%= f.text_field :belongs_to, placeholder: "例）◯◯山岳会, ◯◯大学", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @club, key: :belongs_to %>
+  </div>
+
+  <%#------- 団体名 -------- %>
+  <div class="mb-3 <%= @club.errors.include?(:group_name) ? "validation_errors" : "" %>">
+    <%= icon("building") %> <%= f.label "団体名" ,class: "form-label" %>
+    <%= f.text_field :group_name, placeholder: "例）◯◯ワンダーフォーゲル部", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @club, key: :group_name %>
+  </div>
+
+  <%#------- 代表者名 -------- %>
+  <div class="mb-3 <%= @club.errors.include?(:representative_name) ? "validation_errors" : "" %>">
+    <%= icon("person") %> <%= f.label "代表者" ,class: "form-label required" %>
+    <%= f.text_field :representative_name, placeholder: "例）山田太郎", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @club, key: :representative_name %>
+  </div>
+
+  <%#------- 代表者住所 -------- %>
+  <div class="mb-3 <%= @club.errors.include?(:representative_address) ? "validation_errors" : "" %>">
+    <%= icon("mailbox2") %> <%= f.label "代表者住所" ,class: "form-label required" %>
+    <%= f.text_field :representative_address, placeholder: "例）東京都新宿区新宿◯◯", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @club, key: :representative_address %>
+  </div>
+
+  <%#------- 代表者電話番号 -------- %>
+  <div class="mb-3 <%= @club.errors.include?(:representative_number) ? "validation_errors" : "" %>">
+    <%= icon("telephone-outbound") %> <%= f.label "代表者電話番号" ,class: "form-label required" %>
+    <%= f.text_field :representative_number, placeholder: "例）090-1234-5678", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @club, key: :representative_number %>
+  </div>
+
+  <%#------- 緊急連絡先の氏名 -------- %>
+  <div class="mb-3 <%= @club.errors.include?(:emergency_contact) ? "validation_errors" : "" %>">
+    <%= icon("person") %> <%= f.label "緊急連絡先の氏名" ,class: "form-label required" %>
+    <%= f.text_field :emergency_contact, placeholder: "例）鈴木一郎", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @club, key: :emergency_contact %>
+  </div>
+
+  <%#------- 緊急連絡先の住所 -------- %>
+  <div class="mb-3 <%= @club.errors.include?(:address) ? "validation_errors" : "" %>">
+    <%= icon("mailbox2") %> <%= f.label "緊急連絡先の住所" ,class: "form-label required" %>
+    <%= f.text_field :address, placeholder: "例）東京都渋谷区代々木◯◯", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @club, key: :address %>
+  </div>
+
+  <%#------- 緊急連絡先の電話番号 -------- %>
+  <div class="mb-3 <%= @club.errors.include?(:phone_number) ? "validation_errors" : "" %>">
+    <%= icon("telephone-outbound") %> <%= f.label "緊急連絡先の電話番号" ,class: "form-label required" %>
+    <%= f.text_field :phone_number, placeholder: "例）090-1234-1234", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @club, key: :phone_number %>
+  </div>
+
+  <%#------- 救援体制の有無 -------- %>
+  <div class="mb-4 <%= @club.errors.include?(:rescue_system) ? "validation_errors" : "" %>">
+    <%= icon("people") %> <%= f.label "救援体制" ,class: "form-label required" %>
+    <%= f.text_field :rescue_system, placeholder: "例）ある(10名) or ない", class: "form-control" %>
+    <%= render 'layouts/error',class: "invalid-feedback", obj: @club, key: :rescue_system %>
+  </div>
+
+
+
+  <%#------- 登録 -------- %>
+  <%= f.submit "登録する", class: "btn btn-primary" %>
+  <%= link_to "キャンセル", @plan , class: "btn btn-secondary"%>
+<% end %>
