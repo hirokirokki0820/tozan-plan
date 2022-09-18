@@ -1,8 +1,16 @@
 <h1>マイページ</h1>
 <h5><%= icon_with_text("person-circle", "#{@user.name}") %></h5>
 
+<% if current_user.email == "guest@example.com" %>
+  <div class="text-danger p-3 bg-light fw-bold">
+    <h5>【※注意】</h5>
+    <p class="mx-2">ゲストユーザーアカウントはお試し用の共用アカウントです。</p>
+    <p class="mx-2">個人を特定されるリスクを避けるため、リアルな個人情報の入力・保存はお控えください。（架空の情報であればOKです）</p>
+  </div>
+<% end %>
+
 <!-- 計画書一覧 -->
-<div class="card shadow mt-3 mb-5">
+<div class="card shadow mt-3 mb-4">
   <div class="card-header">
     <%= icon_with_text("file-earmark", "計画書一覧") %>
   </div>

@@ -1,5 +1,9 @@
-<h1>ログイン</h1>
-<%= form_with(scope: :session, model: @user, url: login_path, local: true, id: "sessionForm") do |f| %>
+<div class="mb-3">
+  <h1>ログインする</h1>
+  <%= link_to "新規登録はこちら>>", signup_path %>
+</div>
+
+<%= form_with(scope: :session, model: @user, url: login_path, local: true, id: "sessionForm", class: "bg-light p-3") do |f| %>
 
   <div class="mb-3">
     <%= icon("envelope") %> <%= f.label "Eメールアドレス", for: "sessionEmail", class: "form-label required" %>
@@ -9,7 +13,7 @@
   <div class="mb-3">
     <%= icon("key-fill") %> <%= f.label "パスワード", for: "sessionPassword", class: "form-label required" %>
     <%= f.password_field :password, class: "form-control", id: "sessionPassword"%>
-    <%= link_to ">>パスワードをお忘れですか？", new_password_reset_path %>
+    <%= link_to "パスワードを忘れた方はこちら", new_password_reset_path %>
   </div>
 
   <div class="form-check mb-4">

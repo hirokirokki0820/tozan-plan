@@ -1,24 +1,35 @@
 Rails.application.routes.draw do
   root "main#top"
 
+  # 新規登録
   get "signup", to: "users#new"
+
+  # マイページ
   get "mypage", to: "users#show"
   get "mypage/account_setting", to: "users#edit"
   delete "account_delete", to: "users#destroy"
+
+  # ログイン、ログアウト
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
 
+  # ゲストログイン
+  post "guest_login", to: "guest_sessions#create"
+
+  # ユーザー
   resources :users, only: [:index, :create, :update] do
     resources :address_books
     resources :add_addresses, only: [:new]
   end
 
+  # アカウント有効化、パスワード再設定
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
 
+  # 登山計画書
   resources :plans do
-    # pdf 出力
+    # 計画書（PDF）出力
     scope module: :pdfs do
       resources :climbing_plan, only: [:index]
     end
@@ -30,7 +41,7 @@ Rails.application.routes.draw do
     resources :plan_escapes
   end
 
-  # フォーマット用pdf 出力
+  # 計画書のサンプル(PDF)
   scope module: :pdfs do
     resources :sample_format, only: [:index]
   end

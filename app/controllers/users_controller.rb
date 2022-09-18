@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy ]
   before_action :require_user, only: [:show, :edit, :update, :destroy]
   before_action :require_same_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_verified_user, only: [:edit, :update, :destroy]
 
   def index
     # @users = User.all
@@ -43,7 +44,7 @@ class UsersController < ApplicationController
 
   private
     def set_user
-      @user = User.find_by(id: current_user.id)
+      @user = User.find_by(id: current_user.id) if logged_in?
     end
 
     def user_params
@@ -54,6 +55,12 @@ class UsersController < ApplicationController
       if current_user != @user
         flash[:alert] = "ユーザーご本人以外のアクセスは禁止されています"
         redirect_to @user
+      end
+    end
+
+    def require_verified_user
+      if logged_in? && (current_user.email == "guest@example.com")
+        redirect_to root_url, alert: "ゲストユーザーのアカウント編集・削除はできません"
       end
     end
 end

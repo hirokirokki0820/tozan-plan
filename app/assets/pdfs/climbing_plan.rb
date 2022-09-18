@@ -147,15 +147,15 @@ class ClimbingPlan < Prawn::Document
     emergency_contact = "" #緊急連絡先
     rescue_system = "" #救援体制
     if @club.present?
-      belongs_to << @club.belongs_to
-      group_name << @club.group_name
-      representative_name << @club.representative_name
-      representative_address << @club.representative_address
-      representative_number << @club.representative_number
-      address << @club.address
-      phone_number << @club.phone_number
-      emergency_contact << @club.emergency_contact
-      rescue_system << @club.rescue_system
+      belongs_to = @club.belongs_to
+      group_name = @club.group_name
+      representative_name = @club.representative_name
+      representative_address = @club.representative_address
+      representative_number = @club.representative_number
+      address = @club.address
+      phone_number = @club.phone_number
+      emergency_contact = @club.emergency_contact
+      rescue_system = @club.rescue_system
     end
 
     club = [
@@ -227,7 +227,7 @@ class ClimbingPlan < Prawn::Document
     end
 
     escape = ""
-    escape << @escape.escape_route
+    escape = @escape.escape_route if @escape.present?
 
     escape_route = [
       ["エスケープルート\n(荒天・非常時対策)", "#{escape}"]
