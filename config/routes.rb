@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     resources :plan_clubs
     resources :plan_equipments
     resources :plan_escapes
+    resources :copy_plans, only: [:create]
   end
 
   # 計画書のサンプル(PDF)

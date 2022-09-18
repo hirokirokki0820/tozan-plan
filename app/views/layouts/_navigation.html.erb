@@ -12,7 +12,6 @@
 
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-              <li><%= link_to icon_with_text("list-ul","計画書一覧"), plans_path, class: "dropdown-item" %></li>
               <li><%= link_to icon_with_text("file-earmark", "新規計画書作成"), new_plan_path, class: "dropdown-item" %></li>
               <li><%= link_to icon_with_text("download", "計画書サンプル(PDF)"), sample_format_index_path(format: "pdf"), class: "dropdown-item" %></li>
             </ul>

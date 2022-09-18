@@ -29,7 +29,7 @@ class PlansController < ApplicationController
 
   def update
     if @plan.update(plan_params)
-      redirect_to plans_path , notice: '登山計画書が更新されました'
+      redirect_to @plan , notice: '登山計画書が更新されました'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class PlansController < ApplicationController
 
   def destroy
     @plan.destroy
-    redirect_to plans_path, notice: '計画書が削除されました', status: :see_other
+    redirect_to mypage_path, notice: '計画書が削除されました', status: :see_other
   end
 
   private

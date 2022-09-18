@@ -37,7 +37,7 @@
 
         <div class="col-7 text-end">
           <%= link_to icon("file-earmark-pdf"), plan_climbing_plan_index_path(plan, format: "pdf"), class: "btn btn-outline-danger" %>
-          <%= link_to icon("clipboard-check"), plan, class: "btn btn-outline-success" %>
+          <%= link_to icon("clipboard-check"), plan_copy_plans_path(plan), class: "btn btn-outline-success", data: { turbo_method: :post } %>
           <%= link_to "編集", edit_plan_path(plan) , class: "btn btn-outline-primary" %>
         </div>
         <hr class="mt-2" style="border: 1px solid #ccc">
