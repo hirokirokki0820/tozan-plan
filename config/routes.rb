@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   # 新規登録
   get "signup", to: "users#new"
 
+  # メールアドレス登録済みチェック
+  post "signup/check_email", to: "users#is_registered?"
+
   # マイページ
   get "mypage", to: "users#show"
   get "mypage/account_setting", to: "users#edit"

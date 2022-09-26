@@ -4,7 +4,7 @@
   <%#------- 食糧 -------- %>
   <div class="mb-3 <%= @equipment.errors.include?(:food) ? "validation_errors" : "" %>">
     <%= icon("cup-straw") %> <%= f.label "食糧" ,class: "form-label required" %>
-    <%= f.text_field :food, placeholder: "例）基本食(◯日分), 行動食(◯日分), 水(◯日分)", class: "form-control" %>
+    <%= f.text_field :food, placeholder: "例）基本食(◯日分), 行動食(◯日分), 水(◯L)", class: "form-control" %>
     <%= render 'layouts/error',class: "invalid-feedback", obj: @equipment, key: :food %>
   </div>
 

@@ -12,3 +12,6 @@ application.register("hello", HelloController)
 
 import ScheduleController from "./schedule_controller"
 application.register("schedule", ScheduleController)
+
+import SignupController from "./signup_controller"
+application.register("signup", SignupController)

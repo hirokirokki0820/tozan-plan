@@ -3,8 +3,8 @@
 <%= form_with(scope: :password_reset, model: @user, url: password_resets_path, local: true) do |f| %>
 
   <div class="mb-3">
-    <%= icon("envelope") %> <%= f.label "Eメールアドレス", for: "resetEmail", class: "form-label required" %>
-    <%= f.email_field :email, class: "form-control", id: "resetEmail"%>
+    <%= icon("envelope") %> <%= f.label "Eメールアドレス", class: "form-label required" %>
+    <%= f.email_field :email, class: "form-control" %>
   </div>
 
   <div class="mb-5">

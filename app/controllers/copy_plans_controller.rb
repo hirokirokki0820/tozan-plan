@@ -1,5 +1,5 @@
 class CopyPlansController < ApplicationController
-  before_action :set_plan
+  before_action :set_plan, only: [:create]
 
   def create
     # @plan のコピー

@@ -29,7 +29,7 @@ export default class extends Controller {
 
   // 「アドレス帳から追加」で名前を選択したら自動で個人情報が入力される
   selectAddressBook(){
-    // アドレス超のidを取得
+    // アドレス帳のidを取得
     const selectedValue = this.select_addressesTarget.value
     const addressBooks = JSON.parse(this.select_addressesTarget.dataset.json)
 

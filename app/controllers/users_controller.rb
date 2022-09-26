@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :require_user, only: [:show, :edit, :update, :destroy]
   before_action :require_same_user, only: [:show, :edit, :update, :destroy]
   before_action :require_verified_user, only: [:edit, :update, :destroy]
+  # protect_from_forgery except: :is_registered?
 
   def index
     # @users = User.all
@@ -40,6 +41,12 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
       redirect_to root_url, notice: "ユーザーアカウントを削除しました", status: :see_other
+  end
+
+  # メールアドレスがすでに登録されているかどうかチェックする
+  def is_registered?
+    user = User.find_by(email: params[:email]) # クリエパラメータに埋め込んだEメールアドレスからユーザーを検索（いなければnull)
+    render json: user
   end
 
   private

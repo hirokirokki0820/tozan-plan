@@ -1,16 +1,43 @@
-<%= bootstrap_form_with(model: user, class: "mb-5 bg-light p-3") do |f| %>
-  <%= f.text_field :name, placeholder: "ユーザー名（表示名）を入力してください" %>
+<%= form_with(model: user, class: "bg-light p-3 mb-5", data: { controller: "signup", action: "input->signup#validSubmit" }) do |f| %>
 
-  <% if user.new_record? %>
-    <%= f.email_field :email, placeholder: "有効なEメールアドレスを入力してください" %>
-  <% else %>
-    <%= f.email_field :email, label: "Eメールアドレス(変更できません)", disabled: true %>
-  <% end %>
+  <%#------- ユーザー名 --------%>
+  <div class="mb-3">
+    <%= icon("person") %> <%= f.label "ユーザー名(表示名)", class: "form-label required" %>
+    <%= f.text_field :name, class: "form-control", data: { signup_target: "name", action: "input->signup#nameValidation" } %>
+    <p data-signup-target="error_name"></p>
+  </div>
 
-  <%= f.password_field :password, placeholder: "6文字以上の半角英数字を入力してください" %>
+  <%#------- Eメールアドレス --------%>
+  <div class="mb-3">
+    <% if user.new_record? %>
+      <%= icon("envelope") %> <%= f.label "Eメールアドレス", class: "form-label required" %>
+      <%= f.email_field :email, class: "form-control", data: { signup_target: "email", action: "input->signup#emailValidation" } %>
+      <p data-signup-target="error_email"></p>
+    <% else %>
+      <%= icon("envelope") %> <%= f.label "Eメールアドレス(変更できません)", class: "form-label" %>
+      <%= f.email_field :email, class: "form-control", disabled: true %>
+    <% end %>
+  </div>
 
-  <%= f.password_field :password_confirmation, placeholder: "パスワードをもう一度入力してください" %>
+  <%#------- パスワード & パスワード確認 --------%>
+  <div data-action="input->signup#passwordValidation">
+    <div class="mb-3">
+      <%= icon("key-fill") %> <%= f.label "パスワード", class: "form-label required" %>
+      <%= f.password_field :password, class: "form-control", data: { signup_target: "password" } %>
+      <p data-signup-target="error_password"></p>
+    </div>
 
-  <%= f.primary %>
-  <%= link_to "キャンセル", user.new_record? ? root_path : mypage_path , class: "btn btn-secondary"%>
+    <div class="mb-3">
+      <%= icon("key-fill") %> <%= f.label "パスワード(確認用)", class: "form-label required" %>
+      <%= f.password_field :password_confirmation, class: "form-control", data: { signup_target: "password_confirmation" } %>
+      <p data-signup-target="error_password_confirmation"></p>
+    </div>
+  </div>
+
+  <%#------- 送信 --------%>
+  <div class="mb-5">
+    <%= f.submit class: "btn btn-primary", disabled: true, data: { signup_target: "submit", disable_with: "保存中..." } %>
+    <%= link_to "キャンセル", root_path, class: "btn btn-secondary" %>
+  </div>
+
 <% end %>
